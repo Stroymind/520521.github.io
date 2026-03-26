@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F5F3EE;
+  --ink: #1A1A18;
+  --muted: #8A8880;
+  --accent: #2D2D2B;
+  --line: #D8D5CE;
+  --hover-bg: #ECEAE3;
+  --tag-bg: #E8E5DE;
+  --sidebar-w: 220px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── LAYOUT ── */
+.shell { display: grid; grid-template-columns: var(--sidebar-w) 1fr; min-height: 100vh; }
+
+/* ── SIDEBAR ── */
+aside {
+  position: sticky; top: 0; height: 100vh;
+  border-right: 1px solid var(--line);
+  padding: 48px 28px;
+  display: flex; flex-direction: column; gap: 0;
+  background: var(--bg); z-index: 10; overflow: hidden;
+}
+.logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; margin-bottom: 4px; }
+.logo em { font-style: italic; color: var(--muted); }
+.tagline { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 40px; }
+nav { flex: 1; }
+nav a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 0; color: var(--muted); text-decoration: none;
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  border-bottom: 1px solid transparent; transition: color 0.2s; cursor: pointer;
+}
+nav a:hover, nav a.active { color: var(--ink); }
+nav a.active { border-bottom-color: var(--ink); }
+nav a .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--line); flex-shrink: 0; transition: background 0.2s; }
+nav a.active .dot, nav a:hover .dot { background: var(--ink); }
+.sidebar-footer { font-size: 10px; color: var(--muted); letter-spacing: 0.05em; }
+
+/* ── MAIN ── */
+main { max-width: 1000px; }
+
+/* ── SECTIONS ── */
+.section { display: none; animation: fadeUp 0.35s ease both; }
+.section.active { display: block; }
+
+/* ── HOME ── */
+#home { position: relative; min-height: 100vh; }
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-size: cover; background-position: center;
+  background-repeat: no-repeat;
+}
+.hero-bg-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(245,243,238,0.55) 0%, rgba(245,243,238,0.92) 60%, var(--bg) 100%);
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  padding: 80px 64px 64px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+}
+.hero-left {}
+.hero-eyebrow { font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 20px; }
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 300; line-height: 1.0; letter-spacing: -0.01em; margin-bottom: 24px;
+}
+.hero-name em { font-style: italic; color: var(--muted); display: block; }
+.hero-bio { color: var(--muted); font-size: 12px; line-height: 1.9; max-width: 400px; margin-bottom: 32px; }
+.hero-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.hero-link {
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none;
+  border-bottom: 1px solid var(--ink); padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.hero-link:hover { color: var(--muted); border-color: var(--muted); }
+.hero-right {}
+.hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); margin-bottom: 32px; }
+.stat-box { background: var(--bg); padding: 24px 20px; }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; line-height: 1; margin-bottom: 6px; }
+.stat-label { font-size: 9px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.hero-recent-title { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+.recent-list { list-style: none; }
+.recent-list li {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid var(--line); cursor: pointer;
+  transition: color 0.15s;
+}
+.recent-list li:hover { color: var(--muted); }
+.recent-list .r-title { font-size: 12px; }
+.recent-list .r-cat { font-size: 9px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* ── EDIT HOME ── */
+.edit-home-btn {
+  position: absolute; top: 24px; right: 24px; z-index: 5;
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  background: var(--bg); border: 1px solid var(--line); color: var(--muted);
+  padding: 8px 16px; cursor: pointer; transition: all 0.2s;
+}
+.edit-home-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+/* ── SECTION INNER ── */
+.section-inner { padding: 48px 64px 80px; }
+.section-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 40px; padding-bottom: 16px; border-bottom: 1px solid var(--line);
+}
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; }
+.section-count { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; }
+
+/* ── UPLOAD ZONE ── */
+.upload-zone {
+  border: 1px dashed var(--line); padding: 20px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 40px; cursor: pointer; transition: background 0.2s, border-color 0.2s; gap: 16px;
+}
+.upload-zone:hover { background: var(--hover-bg); border-color: var(--accent); }
+.upload-text { font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
+.upload-btn {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink); background: none; border: 1px solid var(--ink); padding: 8px 20px; cursor: pointer; transition: background 0.2s, color 0.2s; white-space: nowrap;
+}
+.upload-btn:hover { background: var(--ink); color: var(--bg); }
+
+/* ── GRID ── */
+.works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1px; background: var(--line); }
+
+/* ── CARD ── */
+.work-card { background: var(--bg); cursor: pointer; transition: background 0.15s; position: relative; overflow: hidden; }
+.work-card:hover { background: var(--hover-bg); }
+.work-thumb {
+  width: 100%; aspect-ratio: 4/3; background: var(--tag-bg);
+  overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;
+}
+.work-thumb img, .work-thumb video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.4s ease;
+}
+.work-card:hover .work-thumb img,
+.work-card:hover .work-thumb video { transform: scale(1.03); }
+.work-thumb .ph { font-size: 32px; opacity: 0.18; }
+.work-thumb .multi-badge {
+  position: absolute; bottom: 8px; right: 8px;
+  background: rgba(26,26,24,0.7); color: #fff;
+  font-size: 9px; letter-spacing: 0.06em; padding: 3px 8px;
+}
+.card-body { padding: 20px; }
+.work-type { font-size: 9px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+.work-title { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; margin-bottom: 8px; line-height: 1.3; }
+.work-desc { font-size: 11px; color: var(--muted); line-height: 1.7; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.work-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag { font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 7px; background: var(--tag-bg); color: var(--muted); }
+.work-date { position: absolute; top: 14px; right: 14px; background: rgba(245,243,238,0.85); font-size: 9px; color: var(--muted); padding: 2px 6px; }
+
+/* ── EMPTY ── */
+.empty-state { padding: 64px 0; text-align: center; color: var(--muted); grid-column: 1/-1; }
+.empty-num { font-family: 'Cormorant Garamond', serif; font-size: 72px; font-weight: 300; color: var(--line); line-height: 1; margin-bottom: 12px; }
+.empty-state p { font-size: 11px; letter-spacing: 0.06em; }
+
+/* ── MODAL BASE ── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(26,26,24,0.55); backdrop-filter: blur(4px);
+  z-index: 100; align-items: center; justify-content: center; padding: 24px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--bg); width: 100%; max-width: 640px;
+  padding: 48px; position: relative; animation: fadeUp 0.25s ease both;
+  max-height: 92vh; overflow-y: auto;
+}
+.modal-close {
+  position: absolute; top: 20px; right: 20px;
+  background: none; border: none; font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--muted); cursor: pointer; letter-spacing: 0.08em;
+}
+.modal-close:hover { color: var(--ink); }
+.modal h2 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; margin-bottom: 32px; }
+.form-group { margin-bottom: 22px; }
+.form-label { display: block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.form-input, .form-textarea, .form-select {
+  width: 100%; background: transparent; border: none;
+  border-bottom: 1px solid var(--line); padding: 8px 0;
+  font-family: 'DM Mono', monospace; font-size: 13px; color: var(--ink);
+  outline: none; transition: border-color 0.2s;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--ink); }
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-select option { background: var(--bg); }
+.modal-actions { display: flex; justify-content: flex-end; gap: 16px; margin-top: 36px; }
+.btn-cancel { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--muted); background: none; border: none; cursor: pointer; }
+.btn-save {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--bg); background: var(--ink); border: none; padding: 12px 32px; cursor: pointer; transition: opacity 0.2s;
+}
+.btn-save:hover { opacity: 0.8; }
+
+/* ── FILE DROP AREA ── */
+.file-drop {
+  border: 1px dashed var(--line); padding: 24px; text-align: center;
+  cursor: pointer; transition: background 0.2s, border-color 0.2s; margin-top: 8px;
+}
+.file-drop:hover, .file-drop.dragging { background: var(--hover-bg); border-color: var(--ink); }
+.file-drop input[type="file"] { display: none; }
+.file-drop-text { font-size: 11px; color: var(--muted); }
+.file-drop-text strong { color: var(--ink); }
+.file-list { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+.file-item {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--tag-bg); padding: 7px 12px; font-size: 11px;
+}
+.file-item-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 80%; }
+.file-item-remove { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 14px; line-height: 1; }
+.file-item-remove:hover { color: var(--ink); }
+
+/* ── VIEW MODAL ── */
+.vm-gallery { margin-bottom: 24px; }
+.vm-main-img { width: 100%; max-height: 400px; object-fit: contain; background: var(--tag-bg); display: block; margin-bottom: 8px; }
+.vm-main-video { width: 100%; max-height: 360px; background: #000; display: block; margin-bottom: 8px; }
+.vm-thumbs { display: flex; gap: 6px; flex-wrap: wrap; }
+.vm-thumb {
+  width: 60px; height: 60px; object-fit: cover; cursor: pointer;
+  opacity: 0.6; transition: opacity 0.2s; border: 2px solid transparent;
+}
+.vm-thumb.active, .vm-thumb:hover { opacity: 1; border-color: var(--ink); }
+.vm-pdf-link { display: inline-block; font-size: 11px; color: var(--muted); margin-bottom: 20px; padding: 10px 16px; background: var(--tag-bg); }
+.vm-type { font-size: 9px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+.vm-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; margin-bottom: 12px; }
+.vm-desc { font-size: 12px; color: var(--muted); line-height: 1.85; margin-bottom: 16px; }
+.vm-meta { font-size: 10px; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 20px; }
+.delete-btn {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em;
+  color: #9B3A3A; background: none; border: 1px solid #9B3A3A;
+  padding: 8px 16px; cursor: pointer; transition: all 0.2s;
+}
+.delete-btn:hover { background: #9B3A3A; color: white; }
+
+/* ── EDIT HOME MODAL ── */
+.color-swatch-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.color-swatch {
+  width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+  border: 2px solid transparent; transition: border-color 0.2s; flex-shrink: 0;
+}
+.color-swatch.selected { border-color: var(--ink); }
+.bg-preview {
+  width: 100%; height: 80px; background-size: cover; background-position: center;
+  margin-top: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--muted); border: 1px dashed var(--line);
+}
+.img-upload-row { display: flex; gap: 12px; align-items: center; margin-top: 8px; }
+
+/* ── ANIM ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 64px 32px 48px; }
+}
+@media (max-width: 768px) {
+  .shell { grid-template-columns: 1fr; }
+  aside {
+    position: relative; height: auto;
+    padding: 24px 20px 16px;
+    border-right: none; border-bottom: 1px solid var(--line);
+    flex-direction: row; flex-wrap: wrap; align-items: center; gap: 16px;
+  }
+  .tagline, .sidebar-footer { display: none; }
+  nav { display: flex; gap: 0; }
+  nav a { padding: 6px 10px; font-size: 10px; border-bottom: none; }
+  .section-inner { padding: 32px 20px 64px; }
+  .hero-inner { padding: 40px 20px 32px; }
+  .works-grid { grid-template-columns: 1fr 1fr; }
+  .modal { padding: 32px 20px; }
+}
+@media (max-width: 480px) {
+  .works-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- SIDEBAR -->
+  <aside>
+    <div>
+      <div class="logo" id="sidebar-name">作品<em>集</em></div>
+      <div class="tagline">Portfolio</div>
+    </div>
+    <nav>
+      <a class="active" onclick="showSection('home')" data-section="home"><span class="dot"></span>主页</a>
+      <a onclick="showSection('writing')" data-section="writing"><span class="dot"></span>写作</a>
+      <a onclick="showSection('video')" data-section="video"><span class="dot"></span>视频</a>
+      <a onclick="showSection('modeling')" data-section="modeling"><span class="dot"></span>建模</a>
+      <a onclick="showSection('language')" data-section="language"><span class="dot"></span>外语</a>
+    </nav>
+    <div class="sidebar-footer" id="sidebar-footer">© 2025</div>
+  </aside>
+
+  <main>
+    <!-- ── HOME ── -->
+    <div id="home" class="section active">
+      <div style="position:relative">
+        <div class="hero-bg" id="hero-bg"></div>
+        <div class="hero-bg-overlay" id="hero-overlay"></div>
+        <button class="edit-home-btn" onclick="openEditHome()">✎ 编辑主页</button>
+        <div class="hero-inner">
+          <div class="hero-left">
+            <div class="hero-eyebrow" id="hero-eyebrow">— Portfolio</div>
+            <div class="hero-name" id="hero-name">
+              <span id="hero-name-main">你的名字</span><br>
+              <em id="hero-name-sub">创作者</em>
+            </div>
+            <div class="hero-bio" id="hero-bio">在这里写一段关于你自己的介绍，分享你的创作理念和兴趣所在。每一件作品都是一段探索的痕迹。</div>
+            <div class="hero-links" id="hero-links"></div>
+          </div>
+          <div class="hero-right">
+            <div class="hero-stats" id="home-stats"></div>
+            <div class="hero-recent-title">最近更新</div>
+            <ul class="recent-list" id="recent-list"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── WORK SECTIONS ── -->
+    <div id="writing" class="section">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-title">写作</span>
+          <span class="section-count" id="writing-count">— 0 件</span>
+        </div>
+        <div class="upload-zone" onclick="openUploadModal('writing')">
+          <span class="upload-text">文章、散文、诗歌 — 支持批量上传多个文件</span>
+          <button class="upload-btn" type="button">+ 添加作品</button>
+        </div>
+        <div class="works-grid" id="writing-grid"></div>
+      </div>
+    </div>
+
+    <div id="video" class="section">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-title">视频</span>
+          <span class="section-count" id="video-count">— 0 件</span>
+        </div>
+        <div class="upload-zone" onclick="openUploadModal('video')">
+          <span class="upload-text">影片、短片、纪录片 — 支持批量上传多个文件</span>
+          <button class="upload-btn" type="button">+ 添加作品</button>
+        </div>
+        <div class="works-grid" id="video-grid"></div>
+      </div>
+    </div>
+
+    <div id="modeling" class="section">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-title">建模</span>
+          <span class="section-count" id="modeling-count">— 0 件</span>
+        </div>
+        <div class="upload-zone" onclick="openUploadModal('modeling')">
+          <span class="upload-text">渲染图、截图、模型文件 — 支持批量上传多个文件</span>
+          <button class="upload-btn" type="button">+ 添加作品</button>
+        </div>
+        <div class="works-grid" id="modeling-grid"></div>
+      </div>
+    </div>
+
+    <div id="language" class="section">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-title">外语</span>
+          <span class="section-count" id="language-count">— 0 件</span>
+        </div>
+        <div class="upload-zone" onclick="openUploadModal('language')">
+          <span class="upload-text">作文、录音、证书 — 支持批量上传多个文件</span>
+          <button class="upload-btn" type="button">+ 添加作品</button>
+        </div>
+        <div class="works-grid" id="language-grid"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ── UPLOAD MODAL ── -->
+<div class="modal-overlay" id="upload-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('upload-modal')">✕ 关闭</button>
+    <h2>添加新作品</h2>
+    <div class="form-group">
+      <label class="form-label">作品名称 *</label>
+      <input class="form-input" id="work-title" type="text" placeholder="输入标题…">
+    </div>
+    <div class="form-group">
+      <label class="form-label">分类</label>
+      <select class="form-select" id="work-category">
+        <option value="writing">写作</option>
+        <option value="video">视频</option>
+        <option value="modeling">建模</option>
+        <option value="language">外语</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">简介</label>
+      <textarea class="form-textarea" id="work-desc" placeholder="简短描述这件作品…"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">标签（用逗号分隔）</label>
+      <input class="form-input" id="work-tags" type="text" placeholder="例：散文, 2024, 随笔">
+    </div>
+    <div class="form-group">
+      <label class="form-label">封面图片（可选，单张）</label>
+      <label class="file-drop" id="cover-drop" ondragover="onDragOver(event,'cover-drop')" ondragleave="onDragLeave('cover-drop')" ondrop="onDropCover(event)">
+        <input type="file" id="cover-file" accept="image/*" onchange="onCoverSelect()">
+        <div class="file-drop-text">点击或拖拽选择封面图片<br><strong>推荐 4:3 比例</strong></div>
+        <div id="cover-preview" style="margin-top:10px;display:none">
+          <img id="cover-img-preview" style="max-height:100px;max-width:100%;object-fit:contain;">
+          <button onclick="clearCover(event)" style="display:block;margin-top:6px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:11px;">✕ 移除封面</button>
+        </div>
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="form-label">作品文件（可批量选择多个）</label>
+      <label class="file-drop" id="files-drop" ondragover="onDragOver(event,'files-drop')" ondragleave="onDragLeave('files-drop')" ondrop="onDropFiles(event)">
+        <input type="file" id="work-files" multiple accept="image/*,video/*,.pdf,.mp3,.zip" onchange="onFilesSelect()">
+        <div class="file-drop-text">点击或拖拽选择文件<br><strong>支持图片、视频、PDF、音频等多个文件</strong></div>
+      </label>
+      <div class="file-list" id="file-list"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('upload-modal')">取消</button>
+      <button class="btn-save" onclick="saveWork()">保存作品</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── VIEW MODAL ── -->
+<div class="modal-overlay" id="view-modal">
+  <div class="modal" style="max-width:700px">
+    <button class="modal-close" onclick="closeModal('view-modal')">✕ 关闭</button>
+    <div id="view-modal-content"></div>
+  </div>
+</div>
+
+<!-- ── EDIT HOME MODAL ── -->
+<div class="modal-overlay" id="edit-home-modal">
+  <div class="modal" style="max-width:580px">
+    <button class="modal-close" onclick="closeModal('edit-home-modal')">✕ 关闭</button>
+    <h2>编辑主页</h2>
+    <div class="form-group">
+      <label class="form-label">你的名字</label>
+      <input class="form-input" id="edit-name-main" type="text" placeholder="你的名字">
+    </div>
+    <div class="form-group">
+      <label class="form-label">副标题（斜体）</label>
+      <input class="form-input" id="edit-name-sub" type="text" placeholder="创作者 / 设计师 / …">
+    </div>
+    <div class="form-group">
+      <label class="form-label">个人简介</label>
+      <textarea class="form-textarea" id="edit-bio" placeholder="一段关于你的介绍…" style="min-height:100px"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">链接（每行一个，格式：名称 | 网址）</label>
+      <textarea class="form-textarea" id="edit-links" placeholder="GitHub | https://github.com/你的用户名&#10;邮件 | mailto:you@example.com" style="min-height:72px"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">背景图片</label>
+      <div class="img-upload-row">
+        <label style="cursor:pointer;font-size:11px;border:1px solid var(--line);padding:8px 16px;letter-spacing:0.06em" ondragover="onDragOver(event,'bg-drop')" ondragleave="onDragLeave('bg-drop')">
+          点击选择图片
+          <input type="file" id="bg-file" accept="image/*" style="display:none" onchange="onBgSelect()">
+        </label>
+        <button onclick="clearBg()" style="background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;letter-spacing:0.06em">✕ 清除背景</button>
+      </div>
+      <div id="bg-preview" class="bg-preview" style="margin-top:12px">未设置背景图片</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">背景色调</label>
+      <div class="color-swatch-row" id="overlay-swatches">
+        <div class="color-swatch selected" style="background:rgba(245,243,238,0.0)" data-overlay="rgba(245,243,238,0)" onclick="selectOverlay(this,'rgba(245,243,238,0)')"></div>
+        <div class="color-swatch" style="background:rgba(245,243,238,0.4)" data-overlay="rgba(245,243,238,0.4)" onclick="selectOverlay(this,'rgba(245,243,238,0.4)')"></div>
+        <div class="color-swatch" style="background:rgba(26,26,24,0.3)" data-overlay="rgba(26,26,24,0.3)" onclick="selectOverlay(this,'rgba(26,26,24,0.3)')"></div>
+        <div class="color-swatch" style="background:rgba(26,26,24,0.55)" data-overlay="rgba(26,26,24,0.55)" onclick="selectOverlay(this,'rgba(26,26,24,0.55)')"></div>
+        <div class="color-swatch" style="background:rgba(60,40,20,0.3)" data-overlay="rgba(60,40,20,0.3)" onclick="selectOverlay(this,'rgba(60,40,20,0.3)')"></div>
+        <div class="color-swatch" style="background:rgba(20,40,60,0.3)" data-overlay="rgba(20,40,60,0.3)" onclick="selectOverlay(this,'rgba(20,40,60,0.3)')"></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('edit-home-modal')">取消</button>
+      <button class="btn-save" onclick="saveHomeSettings()">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────
+//  DATA & STATE
+// ──────────────────────────────────────────
+const ICONS  = { writing:'✍', video:'▶', modeling:'⬡', language:'◈' };
+const LABELS = { writing:'写作', video:'视频', modeling:'建模', language:'外语' };
+const CATS   = ['writing','video','modeling','language'];
+
+let works    = JSON.parse(localStorage.getItem('pf_works') || '[]');
+let homeConf = JSON.parse(localStorage.getItem('pf_home')  || 'null') || {
+  nameMain:'你的名字', nameSub:'创作者',
+  bio:'在这里写一段关于你自己的介绍，分享你的创作理念和兴趣所在。每一件作品都是一段探索的痕迹。',
+  links:'', bgDataURL:'', overlayColor:'rgba(245,243,238,0)'
+};
+
+let uploadFiles = []; // {name, dataURL, type}
+let coverDataURL = null;
+let currentCat = 'writing';
+
+// ──────────────────────────────────────────
+//  SAVE & LOAD
+// ──────────────────────────────────────────
+function save() { localStorage.setItem('pf_works', JSON.stringify(works)); }
+function saveHome() { localStorage.setItem('pf_home', JSON.stringify(homeConf)); }
+
+// ──────────────────────────────────────────
+//  NAV
+// ──────────────────────────────────────────
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a => a.classList.toggle('active', a.dataset.section === id));
+  document.getElementById(id).classList.add('active');
+  renderAll();
+}
+
+// ──────────────────────────────────────────
+//  RENDER
+// ──────────────────────────────────────────
+function renderAll() {
+  renderHome();
+  CATS.forEach(cat => {
+    const catWorks = works.filter(w => w.category === cat);
+    document.getElementById(cat+'-count').textContent = `— ${catWorks.length} 件`;
+    const grid = document.getElementById(cat+'-grid');
+    grid.innerHTML = catWorks.length ? catWorks.map(cardHTML).join('') : emptyHTML();
+  });
+}
+
+function renderHome() {
+  const h = homeConf;
+  document.getElementById('hero-name-main').textContent = h.nameMain;
+  document.getElementById('hero-name-sub').textContent  = h.nameSub;
+  document.getElementById('hero-bio').textContent = h.bio;
+  document.getElementById('sidebar-name').innerHTML = h.nameMain.charAt(0) + '<em>' + h.nameMain.slice(1) + '</em>';
+
+  // BG
+  const bgEl = document.getElementById('hero-bg');
+  bgEl.style.backgroundImage = h.bgDataURL ? `url(${h.bgDataURL})` : '';
+
+  // Overlay
+  const ov = document.getElementById('hero-overlay');
+  ov.style.background = h.bgDataURL
+    ? `linear-gradient(to bottom, ${h.overlayColor} 0%, rgba(245,243,238,0.9) 65%, var(--bg) 100%)`
+    : '';
+
+  // Links
+  const linksEl = document.getElementById('hero-links');
+  linksEl.innerHTML = '';
+  if (h.links) {
+    h.links.split('\n').filter(l=>l.trim()).forEach(line => {
+      const parts = line.split('|');
+      if (parts.length >= 2) {
+        const a = document.createElement('a');
+        a.className = 'hero-link';
+        a.textContent = parts[0].trim();
+        a.href = parts[1].trim();
+        a.target = '_blank';
+        linksEl.appendChild(a);
+      }
+    });
+  }
+
+  // Stats
+  const statsEl = document.getElementById('home-stats');
+  statsEl.innerHTML = CATS.map(cat => {
+    const n = works.filter(w => w.category===cat).length;
+    return `<div class="stat-box">
+      <div class="stat-num">${n}</div>
+      <div class="stat-label">${LABELS[cat]}</div>
+    </div>`;
+  }).join('');
+
+  // Recent
+  const recent = [...works].sort((a,b)=>b.id-a.id).slice(0,6);
+  document.getElementById('recent-list').innerHTML = recent.length
+    ? recent.map(w=>`<li onclick="viewWork(${w.id})">
+        <span class="r-title">${w.title}</span>
+        <span class="r-cat">${LABELS[w.category]}</span>
+      </li>`).join('')
+    : '<li style="color:var(--muted);font-size:11px">暂无作品</li>';
+}
+
+function cardHTML(w) {
+  const mainFile = w.files && w.files.length > 0 ? w.files[0] : null;
+  const coverSrc = w.coverDataURL || (mainFile && mainFile.type && mainFile.type.startsWith('image/') ? mainFile.dataURL : null);
+  const multiCount = w.files ? w.files.length : 0;
+
+  let thumb = '';
+  if (coverSrc) {
+    thumb = `<img src="${coverSrc}" alt="${w.title}" loading="lazy">`;
+  } else if (mainFile && mainFile.type && mainFile.type.startsWith('video/')) {
+    thumb = `<video src="${mainFile.dataURL}" muted preload="metadata"></video>`;
+  } else {
+    thumb = `<span class="ph">${ICONS[w.category]}</span>`;
+  }
+
+  const multiBadge = multiCount > 1 ? `<span class="multi-badge">${multiCount} 个文件</span>` : '';
+  const tags = (w.tags||'').split(',').filter(t=>t.trim()).map(t=>`<span class="tag">${t.trim()}</span>`).join('');
+
+  return `<div class="work-card" onclick="viewWork(${w.id})">
+    <div class="work-thumb">${thumb}${multiBadge}</div>
+    <div class="card-body">
+      <div class="work-date">${w.date}</div>
+      <div class="work-type">${LABELS[w.category]}</div>
+      <div class="work-title">${w.title}</div>
+      <div class="work-desc">${w.desc||''}</div>
+      <div class="work-tags">${tags}</div>
+    </div>
+  </div>`;
+}
+
+function emptyHTML() {
+  return `<div class="empty-state">
+    <div class="empty-num">∅</div>
+    <p>暂无作品 — 点击上方按钮添加</p>
+  </div>`;
+}
+
+// ──────────────────────────────────────────
+//  UPLOAD MODAL
+// ──────────────────────────────────────────
+function openUploadModal(cat) {
+  currentCat = cat;
+  uploadFiles = [];
+  coverDataURL = null;
+  document.getElementById('work-title').value = '';
+  document.getElementById('work-category').value = cat;
+  document.getElementById('work-desc').value = '';
+  document.getElementById('work-tags').value = '';
+  document.getElementById('work-files').value = '';
+  document.getElementById('cover-file').value = '';
+  document.getElementById('cover-preview').style.display = 'none';
+  renderFileList();
+  document.getElementById('upload-modal').classList.add('open');
+}
+
+// Cover
+function onCoverSelect() {
+  const file = document.getElementById('cover-file').files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    coverDataURL = e.target.result;
+    document.getElementById('cover-img-preview').src = coverDataURL;
+    document.getElementById('cover-preview').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+function clearCover(e) {
+  e.stopPropagation(); e.preventDefault();
+  coverDataURL = null;
+  document.getElementById('cover-file').value = '';
+  document.getElementById('cover-preview').style.display = 'none';
+}
+
+// Files
+function onFilesSelect() {
+  const files = Array.from(document.getElementById('work-files').files);
+  readFiles(files);
+}
+function readFiles(files) {
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      uploadFiles.push({ name: file.name, dataURL: e.target.result, type: file.type });
+      renderFileList();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function renderFileList() {
+  const el = document.getElementById('file-list');
+  el.innerHTML = uploadFiles.map((f,i) => `
+    <div class="file-item">
+      <span class="file-item-name">${f.name}</span>
+      <button class="file-item-remove" onclick="removeFile(${i})">✕</button>
+    </div>`).join('');
+}
+function removeFile(i) { uploadFiles.splice(i,1); renderFileList(); }
+
+// Drag & drop
+function onDragOver(e, id) { e.preventDefault(); document.getElementById(id).classList.add('dragging'); }
+function onDragLeave(id) { document.getElementById(id).classList.remove('dragging'); }
+function onDropCover(e) {
+  e.preventDefault(); document.getElementById('cover-drop').classList.remove('dragging');
+  const files = Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
+  if (files[0]) {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      coverDataURL = ev.target.result;
+      document.getElementById('cover-img-preview').src = coverDataURL;
+      document.getElementById('cover-preview').style.display = 'block';
+    };
+    reader.readAsDataURL(files[0]);
+  }
+}
+function onDropFiles(e) {
+  e.preventDefault(); document.getElementById('files-drop').classList.remove('dragging');
+  readFiles(Array.from(e.dataTransfer.files));
+}
+
+function saveWork() {
+  const title = document.getElementById('work-title').value.trim();
+  if (!title) { alert('请输入作品名称'); return; }
+
+  const work = {
+    id: Date.now(),
+    title,
+    category: document.getElementById('work-category').value,
+    desc: document.getElementById('work-desc').value.trim(),
+    tags: document.getElementById('work-tags').value.trim(),
+    date: new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit'}),
+    coverDataURL: coverDataURL || null,
+    files: [...uploadFiles]
+  };
+
+  works.push(work);
+  save();
+  closeModal('upload-modal');
+  renderAll();
+}
+
+// ──────────────────────────────────────────
+//  VIEW MODAL
+// ──────────────────────────────────────────
+function viewWork(id) {
+  const w = works.find(x => x.id === id);
+  if (!w) return;
+
+  const files = w.files || [];
+  let gallery = '';
+
+  // determine what to show as main
+  const showableFiles = files.filter(f => f.type && (f.type.startsWith('image/') || f.type.startsWith('video/')));
+  const pdfFiles = files.filter(f => f.type === 'application/pdf');
+  const otherFiles = files.filter(f => !f.type.startsWith('image/') && !f.type.startsWith('video/') && f.type !== 'application/pdf');
+
+  if (w.coverDataURL || showableFiles.length > 0) {
+    const firstSrc = w.coverDataURL || showableFiles[0].dataURL;
+    const firstType = w.coverDataURL ? 'image' : (showableFiles[0].type.startsWith('video') ? 'video' : 'image');
+    const mainTag = firstType === 'video'
+      ? `<video class="vm-main-video" id="vm-main" src="${firstSrc}" controls></video>`
+      : `<img class="vm-main-img" id="vm-main" src="${firstSrc}" alt="${w.title}">`;
+
+    const thumbs = showableFiles.length > 1 ? showableFiles.map((f,i) => {
+      const tag = f.type.startsWith('video')
+        ? `<video class="vm-thumb ${i===0?'active':''}" data-src="${f.dataURL}" data-type="video" onclick="switchMedia(this)" src="${f.dataURL}" muted></video>`
+        : `<img class="vm-thumb ${i===0?'active':''}" data-src="${f.dataURL}" data-type="image" onclick="switchMedia(this)" src="${f.dataURL}" loading="lazy">`;
+      return tag;
+    }).join('') : '';
+
+    gallery = `<div class="vm-gallery">${mainTag}${thumbs ? `<div class="vm-thumbs">${thumbs}</div>` : ''}</div>`;
+  }
+
+  const pdfs = pdfFiles.map(f => `<a class="vm-pdf-link" href="${f.dataURL}" download="${f.name}">📄 ${f.name}</a>`).join('');
+  const others = otherFiles.map(f => `<a class="vm-pdf-link" href="${f.dataURL}" download="${f.name}">📎 ${f.name}</a>`).join('');
+
+  const tags = (w.tags||'').split(',').filter(t=>t.trim()).map(t=>`<span class="tag">${t.trim()}</span>`).join('');
+
+  document.getElementById('view-modal-content').innerHTML = `
+    ${gallery}
+    ${pdfs}${others}
+    <div class="vm-type">${LABELS[w.category]}</div>
+    <div class="vm-title">${w.title}</div>
+    <div class="vm-desc">${w.desc||'暂无描述'}</div>
+    <div class="work-tags">${tags}</div>
+    <div class="vm-meta" style="margin-top:12px">${w.date} · ${files.length} 个文件</div>
+    <button class="delete-btn" onclick="deleteWork(${w.id})">删除此作品</button>`;
+
+  document.getElementById('view-modal').classList.add('open');
+}
+
+function switchMedia(el) {
+  document.querySelectorAll('.vm-thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const main = document.getElementById('vm-main');
+  if (el.dataset.type === 'video') {
+    const vid = document.createElement('video');
+    vid.className = 'vm-main-video'; vid.id = 'vm-main'; vid.src = el.dataset.src; vid.controls = true;
+    main.replaceWith(vid);
+  } else {
+    const img = document.createElement('img');
+    img.className = 'vm-main-img'; img.id = 'vm-main'; img.src = el.dataset.src; img.alt = '';
+    main.replaceWith(img);
+  }
+}
+
+function deleteWork(id) {
+  if (!confirm('确认删除此作品？')) return;
+  works = works.filter(w => w.id !== id);
+  save();
+  closeModal('view-modal');
+  renderAll();
+}
+
+// ──────────────────────────────────────────
+//  EDIT HOME MODAL
+// ──────────────────────────────────────────
+function openEditHome() {
+  const h = homeConf;
+  document.getElementById('edit-name-main').value = h.nameMain;
+  document.getElementById('edit-name-sub').value  = h.nameSub;
+  document.getElementById('edit-bio').value  = h.bio;
+  document.getElementById('edit-links').value = h.links||'';
+  updateBgPreview();
+  // sync swatch selection
+  document.querySelectorAll('.color-swatch').forEach(sw => {
+    sw.classList.toggle('selected', sw.dataset.overlay === h.overlayColor);
+  });
+  document.getElementById('edit-home-modal').classList.add('open');
+}
+
+function onBgSelect() {
+  const file = document.getElementById('bg-file').files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => { homeConf.bgDataURL = e.target.result; updateBgPreview(); };
+  reader.readAsDataURL(file);
+}
+
+function clearBg() {
+  homeConf.bgDataURL = '';
+  document.getElementById('bg-file').value = '';
+  updateBgPreview();
+}
+
+function updateBgPreview() {
+  const el = document.getElementById('bg-preview');
+  if (homeConf.bgDataURL) {
+    el.style.backgroundImage = `url(${homeConf.bgDataURL})`;
+    el.textContent = '';
+  } else {
+    el.style.backgroundImage = '';
+    el.textContent = '未设置背景图片';
+  }
+}
+
+function selectOverlay(el, val) {
+  document.querySelectorAll('.color-swatch').forEach(sw => sw.classList.remove('selected'));
+  el.classList.add('selected');
+  homeConf.overlayColor = val;
+}
+
+function saveHomeSettings() {
+  homeConf.nameMain = document.getElementById('edit-name-main').value.trim() || '你的名字';
+  homeConf.nameSub  = document.getElementById('edit-name-sub').value.trim()  || '创作者';
+  homeConf.bio      = document.getElementById('edit-bio').value.trim();
+  homeConf.links    = document.getElementById('edit-links').value.trim();
+  saveHome();
+  closeModal('edit-home-modal');
+  renderHome();
+}
+
+// ──────────────────────────────────────────
+//  MODAL HELPERS
+// ──────────────────────────────────────────
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+});
+
+// ── INIT ──
+renderAll();
+</script>
+</body>
+</html>
