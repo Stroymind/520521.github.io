@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b10">
+<meta name="description" content="我是北辰。跨境电商产品开发，探索 AI 与独立开发。这里记录从想法到产品，再到商业验证的真实过程。">
+<title>北辰 — 从想法，到作品</title>
+<style>
+:root{color-scheme:dark;--bg:#080b10;--ink:#eff5f2;--muted:#a1b4b7;--accent:#b2f8d0;--line:rgba(190,234,220,.14);--page-p:0;font-family:Inter,"PingFang SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);background:var(--bg);overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{font:inherit}a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+[hidden]{display:none!important}::selection{background:var(--accent);color:var(--bg)}
+.skip{position:fixed;top:-100px;left:10px;padding:12px 18px;color:#080b10;background:#fff;z-index:100}.skip:focus{top:10px}
+.progress{height:2px;position:fixed;inset:0 0 auto;z-index:60;background:rgba(255,255,255,.04)}
+.progress:after{content:"";display:block;background:var(--accent);height:100%;width:calc(var(--page-p)*100%);transition:width .07s linear}
+.nav{position:fixed;z-index:50;top:2px;left:0;right:0;display:flex;justify-content:flex-end;align-items:center;padding:0 clamp(21px,6vw,108px);height:66px;pointer-events:none;background:linear-gradient(to bottom,rgba(8,11,16,.94),rgba(8,11,16,0))}
+.nav-inner{pointer-events:auto;display:flex;align-items:center;gap:clamp(16px,3.2vw,43px)}
+.nav a,.lang{font-size:11px;letter-spacing:.13em;color:#c7d9d5;min-height:44px;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+.nav a:hover,.lang:hover{color:var(--accent)}
+.lang{background:none;border:1px solid rgba(178,248,208,.42);border-radius:60px;padding:0 14px;color:var(--accent);cursor:pointer}
+/* Each section remains part of native document scrolling; no snap, no slide switching. */
+.chapter{position:relative;height:285svh;min-height:1600px;isolation:isolate}
+.chapter-stage{height:100svh;min-height:520px;position:sticky;top:0;display:flex;align-items:center;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 72% 58%,rgba(37,118,97,.125),transparent 55%),var(--bg)}
+.chapter:nth-of-type(even) .chapter-stage{background:radial-gradient(ellipse at 22% 43%,rgba(38,99,124,.105),transparent 55%),var(--bg)}
+.chapter-stage:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.44;background-image:linear-gradient(90deg,rgba(160,220,205,.045) 1px,transparent 1px),linear-gradient(rgba(160,220,205,.045) 1px,transparent 1px);background-size:100px 100px;mask-image:radial-gradient(ellipse at 66% 50%,black,transparent 76%)}
+.orbit{position:absolute;width:min(60vw,760px);aspect-ratio:1;right:-16%;top:17%;border:1px solid rgba(172,250,206,.12);border-radius:50%;transform:translate3d(0,calc(var(--scene-p,0)*-85px),0) scale(calc(1 + var(--scene-p,0)*.17));opacity:.72;pointer-events:none}
+.orbit:after{content:"";position:absolute;inset:20%;border:1px solid rgba(172,250,206,.10);border-radius:50%;transform:rotateX(67deg)}
+.chapter:nth-of-type(even) .orbit{right:auto;left:-22%;opacity:.48}
+.stage-inner{width:min(1170px,calc(100% - clamp(52px,17vw,250px)));margin:0 auto;position:relative;min-height:min(72svh,720px);display:flex;align-items:center}
+.chapter[data-align="right"] .stage-inner{justify-content:flex-end}
+.copy{position:absolute;top:50%;left:0;transform:translateY(-50%);width:100%;max-width:1150px;visibility:hidden;pointer-events:none}
+.chapter[data-align="right"] .copy{left:auto;right:0;max-width:1000px;text-align:right}
+.copy-title{font-size:clamp(55px,9vw,143px);font-weight:640;letter-spacing:-.065em;line-height:1.27;margin:0;word-break:keep-all;overflow-wrap:break-word}
+.copy-title .tint{color:var(--accent)}
+.copy-title em{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.065em;font-style:italic;font-weight:450}
+.copy-detail{font-size:clamp(24px,3.7vw,55px);font-weight:420;line-height:1.65;letter-spacing:-.035em;max-width:870px;margin:0;color:#cbd8d7;word-break:keep-all;overflow-wrap:break-word}
+.chapter[data-align="right"] .copy-detail{margin-left:auto}
+.copy-detail strong{color:var(--accent);font-weight:560}
+.copy .glyph{display:inline-block;white-space:pre;will-change:opacity,transform,filter}.copy .word{display:inline-block;white-space:nowrap}.copy .tint{color:var(--accent)}
+.chapter-label{position:absolute;top:clamp(98px,14vh,145px);left:clamp(26px,9vw,135px);z-index:2;color:var(--accent);letter-spacing:.23em;font-size:11px;font-weight:600;opacity:.87}
+.chapter[data-align="right"] .chapter-label{left:auto;right:clamp(26px,9vw,135px)}
+.chapter-bottom{position:absolute;bottom:clamp(28px,6vh,62px);left:clamp(26px,9vw,135px);right:clamp(26px,9vw,135px);display:flex;align-items:center;justify-content:space-between;font-size:10px;letter-spacing:.14em;color:#839ba0;pointer-events:none;gap:12px}
+.chapter-bottom .down{color:var(--accent)}
+.chapter-links{display:flex;flex-wrap:wrap;align-items:center;gap:16px 36px;margin-top:40px;visibility:hidden;opacity:0;pointer-events:none}
+.chapter[data-align="right"] .chapter-links{justify-content:flex-end}
+.chapter-links a,.chapter-links button{display:inline-flex;align-items:center;min-height:45px;max-width:100%;border:0;border-bottom:1px solid rgba(178,248,208,.43);background:none;padding:4px 0 10px;color:var(--accent);font-size:clamp(14px,1.3vw,19px);letter-spacing:.01em;cursor:pointer}
+.chapter-links a:hover,.chapter-links button:hover{color:white;border-color:white}
+.chapter-links[data-active="1"]{visibility:visible;pointer-events:auto}
+.small-note{font-size:clamp(13px,1.45vw,16px);color:#96abad;line-height:1.7;margin:26px 0 0;max-width:600px}
+.chapter[data-align="right"] .small-note{margin-left:auto}
+.chapter .footer-link{font-size:14px}
+.ending{padding:110px clamp(26px,9vw,135px) 54px;text-align:center;background:linear-gradient(180deg,#080b10,#0e171a)}
+.ending-heading{font-size:clamp(32px,4.3vw,67px);font-weight:560;line-height:1.4;margin:0 0 32px;letter-spacing:-.045em}
+.ending-links{display:flex;gap:17px 38px;flex-wrap:wrap;align-items:center;justify-content:center;max-width:980px;margin:0 auto}
+.ending-links a,.ending-links button{font-size:16px;border:0;background:none;border-bottom:1px solid rgba(178,248,208,.5);color:var(--accent);min-height:45px;padding:3px 0 10px;cursor:pointer}
+.ending-links a:hover,.ending-links button:hover{color:white;border-color:white}
+.ending-note{min-height:1.8em;color:#9ab7af;font-size:13px;margin:24px 0 0;line-height:1.65}
+.ending-foot{margin:100px auto 0;border-top:1px solid var(--line);padding-top:26px;color:#849ba0;font-size:12px;display:flex;justify-content:space-between;gap:24px;max-width:1120px;text-align:left}
+.ending-foot a:hover{color:var(--accent)}
+@media(max-width:700px){
+ .chapter{height:285svh;min-height:1350px}
+ .nav{height:60px;padding:0 18px}.nav-inner{gap:19px}.nav a{font-size:10px;letter-spacing:.07em}
+ .chapter-label{left:26px!important;right:auto!important;top:105px;font-size:10px;letter-spacing:.16em}
+ .stage-inner{width:calc(100% - 52px);min-height:65svh}.chapter[data-align="right"] .stage-inner{justify-content:flex-start}
+ .chapter[data-align="right"] .copy{right:auto;left:0;text-align:left}
+ .copy-title{font-size:clamp(49px,12.5vw,85px);line-height:1.29}
+ .copy-detail{font-size:clamp(23px,6vw,32px);line-height:1.62}
+ .chapter[data-align="right"] .copy-detail{margin-left:0}
+ .chapter[data-align="right"] .chapter-links{justify-content:flex-start}
+ .chapter-links{gap:12px 22px;margin-top:30px}
+ .chapter-bottom{left:26px;right:26px;bottom:29px}
+ .orbit{width:112vw;right:-56vw;top:31%;opacity:.5}.chapter:nth-of-type(even) .orbit{left:-72vw;opacity:.35}
+ .ending{padding:85px 26px 34px}.ending-foot{margin-top:75px}.ending-links{gap:10px 26px}
+}
+@media(max-width:370px){.copy-title{font-size:clamp(44px,12vw,55px)}.copy-detail{font-size:22px}.nav-inner{gap:14px}}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}.chapter{height:auto;min-height:0}.chapter-stage{position:relative;height:auto;min-height:0;display:block;padding:128px 0 112px}
+ .stage-inner{min-height:0;display:block}.chapter-label{top:60px}.copy{position:relative;top:auto;left:auto!important;right:auto!important;text-align:left!important;transform:none;visibility:visible!important;opacity:1!important;max-width:100%}
+ .copy-title{font-size:clamp(46px,8vw,95px)}.copy-detail{font-size:clamp(20px,3vw,35px);margin:28px 0 0!important}.copy .glyph{opacity:1!important;filter:none!important;transform:none!important}
+ .chapter-links{visibility:visible!important;opacity:1!important;pointer-events:auto!important;margin-top:25px}.chapter-bottom{display:none}.orbit{display:none}
+ .copy[data-phase="title"],.copy[data-phase="detail"]{display:block}.chapter-stage .copy[data-phase="detail"]{position:relative;margin-top:35px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#scene-1">跳转到正文</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="nav"><nav class="nav-inner" aria-label="主要导航"><a href="#scene-4" data-i="navWork">作品 / WORK</a><a href="#contact" data-i="navContact">联系 / CONTACT</a><button id="lang" class="lang" type="button" aria-label="Switch to English">EN</button></nav></header>
+<main id="main">
+<!-- All chapters are part of one continuous scroll; there are no slides or page snaps. -->
+<section class="chapter" id="scene-1" data-align="left"><div class="chapter-stage"><div class="orbit" aria-hidden="true"></div><span class="chapter-label" data-i="s1Label">01 / ABOUT ME · 关于我</span><div class="stage-inner"><div class="copy" data-phase="title"><h1 class="copy-title"><span data-i="s1Title" data-split>我是<span class="tint">北辰</span></span></h1></div><div class="copy" data-phase="detail"><p class="copy-detail" data-i="s1Detail" data-split>2001 年出生，目前从事跨境电商产品开发</p></div></div><div class="chapter-bottom"><span>BEICHEN / BUILDING IN PUBLIC</span><span data-i="scrollHint">继续向下滚动 ↓</span></div></div></section>
+<section class="chapter" id="scene-2" data-align="right"><div class="chapter-stage"><div class="orbit" aria-hidden="true"></div><span class="chapter-label" data-i="s2Label">02 / EXPLORING · 正在探索</span><div class="stage-inner"><div class="copy" data-phase="title"><h2 class="copy-title"><span data-i="s2Title" data-split>白天做<span class="tint">选品</span></span></h2></div><div class="copy" data-phase="detail"><p class="copy-detail" data-i="s2Detail" data-split>工作之外，我在用 AI 尝试开发自己的产品</p></div></div><div class="chapter-bottom"><span>AI / BUSINESS / INDIE DEVELOPMENT</span><span>↓</span></div></div></section>
+<section class="chapter" id="scene-3" data-align="left"><div class="chapter-stage"><div class="orbit" aria-hidden="true"></div><span class="chapter-label" data-i="s3Label">03 / EXPERIMENTS · 尝试过的事</span><div class="stage-inner"><div class="copy" data-phase="title"><h2 class="copy-title"><span data-i="s3Title" data-split>我也<span class="tint">走过弯路</span></span></h2></div><div class="copy" data-phase="detail"><p class="copy-detail" data-i="s3Detail" data-split>做过拼多多、闲鱼副业。亏过钱，也有过小额盈利</p></div></div><div class="chapter-bottom"><span>SMALL BETS / REAL FEEDBACK</span><span>↓</span></div></div></section>
+<section class="chapter" id="scene-4" data-align="right"><div class="chapter-stage"><div class="orbit" aria-hidden="true"></div><span class="chapter-label" data-i="s4Label">04 / SELECTED WORK · 代表作品</span><div class="stage-inner"><div class="copy" data-phase="title"><h2 class="copy-title"><span data-i="s4Title" data-split>先做出一个<span class="tint">产品</span></span></h2></div><div class="copy" data-phase="detail"><p class="copy-detail" data-i="s4Detail" data-split>《我的书房》已经有可用的网页版，正在探索知识管理方向</p><div class="chapter-links" data-actions><a href="https://stroymind.github.io/My-reader/" target="_blank" rel="noopener noreferrer" data-i="readerLink">体验阅读器 ↗</a><a href="https://github.com/Stroymind/My-reader" target="_blank" rel="noopener noreferrer" data-i="sourceLink">查看源码 ↗</a></div></div></div><div class="chapter-bottom"><span>MY READER / WEB + ANDROID CODE</span><span>↓</span></div></div></section>
+<section class="chapter" id="scene-5" data-align="left"><div class="chapter-stage"><div class="orbit" aria-hidden="true"></div><span class="chapter-label" data-i="s5Label">05 / THE NEXT BET · 下一步</span><div class="stage-inner"><div class="copy" data-phase="title"><h2 class="copy-title"><span data-i="s5Title" data-split>让产品<span class="tint">赚到钱</span></span></h2></div><div class="copy" data-phase="detail"><p class="copy-detail" data-i="s5Detail" data-split>从选品、开发到发布和验证，我想把真实结果记录下来</p></div></div><div class="chapter-bottom"><span>NO PROMISES / SHOW THE WORK</span><span>↓</span></div></div></section>
+<section class="chapter" id="scene-6" data-align="right"><div class="chapter-stage"><div class="orbit" aria-hidden="true"></div><span class="chapter-label" data-i="s6Label">06 / FOLLOW THE JOURNEY · 关注后续</span><div class="stage-inner"><div class="copy" data-phase="title"><h2 class="copy-title"><span data-i="s6Title" data-split>想看看<span class="tint">结果</span>吗</span></h2></div><div class="copy" data-phase="detail"><p class="copy-detail" data-i="s6Detail" data-split>关注我，看看一个普通人能把自己的想法做到哪一步</p><div class="chapter-links" data-actions><a href="https://github.com/Stroymind" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="mailto:zhangbeichen520520@gmail.com">Email ↗</a><a href="#contact" data-i="allContacts">更多联系渠道 ↓</a></div></div></div><div class="chapter-bottom"><span>THE STORY IS STILL BEING WRITTEN</span><span>↓</span></div></div></section>
+<section class="ending" id="contact"><h2 class="ending-heading" data-i="contactHeading">继续关注这个实验</h2><div class="ending-links"><a href="https://github.com/Stroymind" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="mailto:zhangbeichen520520@gmail.com">Email ↗</a><a href="https://wa.me/qr/SLCEHLG7SUOLF1" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a><button id="copy-douyin" type="button" data-i="douyinCopy">抖音 · 复制账号</button><button id="copy-qq" type="button" data-i="qqCopy">QQ · 复制账号</button></div><p class="ending-note" id="copy-feedback" role="status" aria-live="polite"></p><div class="ending-foot"><span>BEICHEN © 2026</span><a href="#scene-1" data-i="backTop">回到开头 ↑</a></div></section>
+</main>
+<script>
+(()=>{
+ 'use strict';
+ const scenes=[...document.querySelectorAll('.chapter')];
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ const i18n={
+ zh:{navWork:'作品 / WORK',navContact:'联系 / CONTACT',s1Label:'01 / ABOUT ME · 关于我',s1Title:'我是北辰',s1Detail:'2001 年出生，目前从事跨境电商产品开发',s2Label:'02 / EXPLORING · 正在探索',s2Title:'白天做选品',s2Detail:'工作之外，我在用 AI 尝试开发自己的产品',s3Label:'03 / EXPERIMENTS · 尝试过的事',s3Title:'我也走过弯路',s3Detail:'做过拼多多、闲鱼副业。亏过钱，也有过小额盈利',s4Label:'04 / SELECTED WORK · 代表作品',s4Title:'先做出一个产品',s4Detail:'《我的书房》已经有可用的网页版，正在探索知识管理方向',s5Label:'05 / THE NEXT BET · 下一步',s5Title:'让产品赚到钱',s5Detail:'从选品、开发到发布和验证，我想把真实结果记录下来',s6Label:'06 / FOLLOW THE JOURNEY · 关注后续',s6Title:'想看看结果吗',s6Detail:'关注我，看看一个普通人能把自己的想法做到哪一步',scrollHint:'继续向下滚动 ↓',readerLink:'体验阅读器 ↗',sourceLink:'查看源码 ↗',allContacts:'更多联系渠道 ↓',contactHeading:'继续关注这个实验',douyinCopy:'抖音 · 复制账号',qqCopy:'QQ · 复制账号',backTop:'回到开头 ↑',douyinOK:'抖音号已复制：Unko52520',douyinFallback:'抖音号：Unko52520',qqOK:'QQ 号已复制',qqFallback:'QQ：3203070078'},
+ en:{navWork:'WORK',navContact:'CONTACT',s1Label:'01 / ABOUT ME',s1Title:'I’m Beichen',s1Detail:'Born in 2001. I work in cross-border e-commerce product development.',s2Label:'02 / EXPLORING',s2Title:'Products by day',s2Detail:'Outside work, I’m learning to build my own products with AI.',s3Label:'03 / EXPERIMENTS',s3Title:'I’ve tried and failed',s3Detail:'I tried e-commerce side projects. Some lost money; some made a little.',s4Label:'04 / SELECTED WORK',s4Title:'I built a reader',s4Detail:'My Reader is usable on the web. I’m exploring where it could go next.',s5Label:'05 / THE NEXT BET',s5Title:'Make products earn',s5Detail:'From sourcing and building to launching and testing, I want to share what really happens.',s6Label:'06 / FOLLOW THE JOURNEY',s6Title:'Curious how it goes?',s6Detail:'Follow along to see how far an ordinary person can take an idea.',scrollHint:'KEEP SCROLLING ↓',readerLink:'Try My Reader ↗',sourceLink:'View source ↗',allContacts:'More ways to connect ↓',contactHeading:'Follow the experiment',douyinCopy:'Douyin · Copy ID',qqCopy:'QQ · Copy ID',backTop:'BACK TO TOP ↑',douyinOK:'Douyin ID copied: Unko52520',douyinFallback:'Douyin: Unko52520',qqOK:'QQ ID copied',qqFallback:'QQ: 3203070078'}
+ };
+ let lang='zh';let frame=0;
+ const clamp=n=>Math.max(0,Math.min(1,n));
+ const ease=(a,b,p)=>{const x=clamp((p-a)/(b-a));return x*x*(3-2*x)};
+ function split(el,text){
+   el.textContent='';el.setAttribute('aria-label',text);const frag=document.createDocumentFragment();
+   const glyphs=(window.Intl?.Segmenter?[...new Intl.Segmenter(lang==='zh'?'zh':'en',{granularity:'grapheme'}).segment(text)].map(x=>x.segment):Array.from(text));
+   const accent={zh:{s1Title:'北辰',s2Title:'选品',s3Title:'弯路',s4Title:'产品',s5Title:'赚到钱',s6Title:'结果'},en:{s1Title:'Beichen',s2Title:'day',s3Title:'failed',s4Title:'reader',s5Title:'earn',s6Title:'goes'}};
+   const highlight=accent[lang][el.getAttribute('data-i')]||'';const start=text.indexOf(highlight);
+   let parent=frag;let inWord=false;
+   glyphs.forEach((ch,index)=>{if(lang==='en'&&ch===' '){parent=frag;inWord=false;frag.append(' ');return}if(lang==='en'&&!inWord){parent=document.createElement('span');parent.className='word';frag.appendChild(parent);inWord=true}
+     const sp=document.createElement('span');sp.className='glyph';sp.textContent=ch;sp.setAttribute('aria-hidden','true');if(highlight&&index>=start&&index<start+Array.from(highlight).length)sp.classList.add('tint');parent.appendChild(sp)});
+   el.append(frag);
+ }
+ function setLang(code){
+   lang=code==='en'?'en':'zh';const v=i18n[lang];document.documentElement.lang=lang==='en'?'en':'zh-CN';document.title=lang==='en'?'Beichen — From ideas to things':'北辰 — 从想法，到作品';
+   document.querySelectorAll('[data-i]').forEach(el=>{const value=v[el.dataset.i];if(value===undefined)return; if(el.hasAttribute('data-split')){split(el,value)}else{el.textContent=value}});
+   document.querySelector('#lang').textContent=lang==='en'?'中文':'EN';document.querySelector('#lang').setAttribute('aria-label',lang==='en'?'切换为中文':'Switch to English');
+   document.querySelector('#copy-feedback').textContent='';schedule();
+ }
+ function applyGlyphs(el,progress,{start,stagger,duration,leaveStart,leaveDuration,leaveStagger}){
+   const chars=el.querySelectorAll('.glyph');const total=Math.max(chars.length-1,1);const fadeGroup=1-ease(leaveStart,leaveStart+leaveDuration,progress);
+   chars.forEach((char,index)=>{
+     const ratio=index/total;const shown=ease(start+ratio*stagger,start+ratio*stagger+duration,progress);
+     const leaving=1-ease(leaveStart+ratio*leaveStagger,leaveStart+ratio*leaveStagger+leaveDuration,progress);
+     const visible=shown*leaving;
+     char.style.opacity=visible.toFixed(3);char.style.filter=`blur(${((1-visible)*6).toFixed(2)}px)`;
+     char.style.transform=`translate3d(0,${((1-visible)*14).toFixed(1)}px,0)`;
+   });
+   el.closest('.copy').style.opacity=(ease(start-.05,start+.09,progress)*fadeGroup).toFixed(3);
+   return fadeGroup;
+ }
+ function update(){
+   frame=0;const pageMax=Math.max(1,document.documentElement.scrollHeight-innerHeight);document.documentElement.style.setProperty('--page-p',(scrollY/pageMax).toFixed(5));
+   if(reduced.matches){scenes.forEach(s=>{s.querySelectorAll('.copy').forEach(x=>x.style.visibility='visible');s.querySelectorAll('[data-actions]').forEach(a=>{a.dataset.active='1';a.removeAttribute('inert')})});return;}
+   scenes.forEach(scene=>{
+     const rect=scene.getBoundingClientRect();const range=Math.max(1,rect.height-innerHeight);const p=clamp(-rect.top/range);scene.style.setProperty('--scene-p',p.toFixed(4));
+     const near=rect.bottom>-innerHeight && rect.top<innerHeight*2;
+     if(!near)return;
+     const title=scene.querySelector('[data-phase="title"]');const detail=scene.querySelector('[data-phase="detail"]');
+     title.style.visibility=p<.54?'visible':'hidden';detail.style.visibility=p>=.515?'visible':'hidden';
+     applyGlyphs(title.querySelector('[data-split]'),p,{start:0,stagger:.14,duration:.105,leaveStart:.40,leaveDuration:.075,leaveStagger:.035});
+     applyGlyphs(detail.querySelector('[data-split]'),p,{start:.53,stagger:.17,duration:.09,leaveStart:.91,leaveDuration:.08,leaveStagger:.00});
+     const action=scene.querySelector('[data-actions]');if(action){const opacity=ease(.72,.79,p)*(1-ease(.92,.99,p));action.style.opacity=opacity.toFixed(3);const active=p>.735&&p<.94;action.dataset.active=active?'1':'0';if(active)action.removeAttribute('inert');else action.setAttribute('inert','');}
+   });
+ }
+ function schedule(){if(!frame)frame=requestAnimationFrame(update)}
+ async function copy(kind){const val=kind==='douyin'?'Unko52520':'3203070078';const feedback=document.querySelector('#copy-feedback');try{if(!navigator.clipboard?.writeText)throw Error('Clipboard unavailable');await navigator.clipboard.writeText(val);feedback.textContent=i18n[lang][kind+'OK']}catch{feedback.textContent=i18n[lang][kind+'Fallback']}}
+ document.querySelector('#lang').addEventListener('click',()=>{setLang(lang==='zh'?'en':'zh');try{localStorage.setItem('beichen-language',lang)}catch{}});
+ document.querySelector('#copy-douyin').addEventListener('click',()=>copy('douyin'));
+ document.querySelector('#copy-qq').addEventListener('click',()=>copy('qq'));
+ addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});reduced.addEventListener?.('change',schedule);
+ let initial=/^zh/i.test(navigator.language||'')?'zh':'en';try{const saved=localStorage.getItem('beichen-language');if(['zh','en'].includes(saved))initial=saved}catch{}
+ setLang(initial);requestAnimationFrame(update);
+})();
+</script>
+</body>
+</html>
