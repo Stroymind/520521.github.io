@@ -4,289 +4,234 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080b10">
-<meta name="description" content="北辰，跨境电商产品开发。使用 AI 探索独立开发，公开记录从想法到产品与商业验证的过程。">
-<meta property="og:title" content="北辰｜从想法，到作品">
-<meta property="og:description" content="跨境电商产品开发、AI 与独立开发。关注一个普通人如何把想法做成真实产品。">
-<title>北辰｜从想法，到作品</title>
+<meta name="description" content="我是北辰。跨境电商产品开发，探索 AI 与独立开发。这里记录从想法到产品，再到商业验证的真实过程。">
+<title>北辰 — 从想法，到作品</title>
 <style>
-:root { color-scheme:dark;--bg:#080b10;--white:#edf6f3;--muted:#a6bab9;--mint:#b7f9d5;--lime:rgba(183,249,213,.4);--progress:0;font-family:Inter,"PingFang SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif; }
-*,*::before,*::after {box-sizing:border-box}
-html {scroll-behavior:smooth}
-body {margin:0;overflow-x:hidden;background:var(--bg);color:var(--white)}
-a {color:inherit;text-decoration:none}button {font:inherit}
-a:focus-visible,button:focus-visible{outline:2px solid var(--mint);outline-offset:5px}
-[hidden]{display:none!important}::selection{background:var(--mint);color:var(--bg)}
-.skip{position:fixed;top:-120px;left:16px;z-index:100;background:#fff;color:#000;padding:12px}.skip:focus{top:14px}
-.progress{height:2px;position:fixed;z-index:80;top:0;left:0;width:100%;background:rgba(255,255,255,.045)}
-.progress::after{content:"";height:100%;display:block;width:calc(var(--progress)*100%);background:var(--mint);transition:width .075s linear}
-.nav{position:fixed;top:2px;right:0;left:0;height:73px;display:flex;align-items:center;justify-content:flex-end;z-index:70;padding:0 clamp(23px,6vw,110px);pointer-events:none;background:linear-gradient(180deg,rgba(8,11,16,.91),rgba(8,11,16,0))}
-.nav-inner{display:flex;gap:clamp(14px,3vw,40px);align-items:center;pointer-events:auto}
-.nav a,.lang{font-size:12px;font-weight:500;letter-spacing:.06em;display:inline-flex;align-items:center;justify-content:center;min-height:46px;white-space:nowrap;color:#c9dcd6}
-.nav a:hover,.lang:hover{color:var(--mint)}
-.lang{color:var(--mint);background:none;border:1px solid rgba(183,249,213,.34);border-radius:50px;padding:0 15px;cursor:pointer}
-/* A continuous scroll surface: no slide snapping and no scroll hijacking. */
-.story{position:relative;height:calc(100svh + 5 * 76svh);min-height:2500px}
-.story-stage{height:100svh;min-height:540px;position:sticky;top:0;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 74% 60%,rgba(32,116,92,.16),transparent 56%),radial-gradient(ellipse at 17% 23%,rgba(36,90,124,.12),transparent 45%),var(--bg)}
-.story-stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(160,220,205,.029) 1px,transparent 1px),linear-gradient(90deg,rgba(160,220,205,.029) 1px,transparent 1px);background-size:106px 106px;mask-image:radial-gradient(ellipse at 65% 55%,#000,transparent 85%);pointer-events:none}
-.story-stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 42%,rgba(8,11,16,.3) 100%)}
-.scene{position:absolute;inset:0;display:grid;place-items:center;opacity:0;visibility:hidden;pointer-events:none;will-change:opacity,transform;transform:translate3d(0,0,0)}
-.scene.is-visible{visibility:visible}
-.scene-inner{position:relative;width:min(1100px,calc(100% - 2 * clamp(28px,9vw,150px)));z-index:3;min-height:48svh;display:grid;align-items:center}
-.scene-title-wrap,.scene-detail-wrap{grid-area:1/1;min-width:0;pointer-events:none}
-.scene-detail-wrap{max-width:860px}
-.title{margin:0;font-weight:660;letter-spacing:-.066em;line-height:1.22;font-size:clamp(56px,9vw,136px);word-break:keep-all;overflow-wrap:break-word}
-.title-text{display:block}
-.title-text .glyph,.detail .glyph{display:inline-block;white-space:pre;transform-origin:50% 76%;will-change:opacity,filter,transform}
-.title-text .word,.detail .word{display:inline-block;white-space:nowrap}
-.title-text .emphasis{color:var(--mint);display:inline-block;font-style:italic;transform:skewX(-9deg)}
-.title-text .emphasis .glyph{font-style:italic}
-.title-copy{position:relative}
-.detail{color:#d7e4df;font-size:clamp(24px,3.6vw,52px);line-height:1.55;letter-spacing:-.04em;font-weight:420;margin:0;max-width:880px;word-break:keep-all;overflow-wrap:break-word}
-.scene-actions{display:flex;flex-wrap:wrap;gap:16px clamp(22px,3vw,40px);margin-top:43px;opacity:0;transform:translateY(16px);visibility:hidden;pointer-events:none}
-.scene-actions a{font-size:clamp(14px,1.6vw,19px);min-height:44px;display:inline-flex;align-items:center;color:var(--mint);border-bottom:1px solid rgba(183,249,213,.44);padding:4px 0 8px;white-space:nowrap}
-.scene-actions a:hover{border-color:#fff;color:white}
-.scene.is-actionable .scene-actions{visibility:visible;pointer-events:auto;opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease}
-.scene.is-actionable{pointer-events:auto}
-.scene-ambient{position:absolute;inset:0;opacity:.6;pointer-events:none;will-change:transform}
-.ribbon{width:min(57vw,700px);aspect-ratio:1;position:absolute;top:18%;right:-20%;border:1px solid rgba(183,249,213,.11);border-radius:50%;transform:rotate(-16deg) scale(1);transition:transform 1s ease}
-.ribbon--inner{width:min(31vw,390px);top:34%;right:-11%;border-color:rgba(183,249,213,.08);transform:rotate(35deg) scaleY(.4)}
-/* Each chapter has a distinct typographic composition. */
-.scene--hero .scene-inner{justify-items:start}.scene--hero .title{font-size:clamp(80px,12vw,174px)}
-.scene--offset .scene-inner{text-align:right;justify-items:end}.scene--offset .detail{margin-left:auto}.scene--offset .ribbon{right:auto;left:-20%}
-.scene--contrast .scene-inner{justify-items:center;text-align:center}.scene--contrast .detail{max-width:810px}.scene--contrast .title{font-weight:750}
-.scene--contrast .ribbon{right:30%;top:10%;transform:scale(.65) rotate(33deg)}
-.scene--work .scene-inner{justify-items:start}.scene--work .title{font-size:clamp(52px,8.1vw,126px)}
-.scene--work .detail{font-size:clamp(23px,3.2vw,44px)}
-.scene--goal .scene-inner{justify-items:end;text-align:right}.scene--goal .detail{margin-left:auto}
-.scene--goal .title{font-size:clamp(52px,8.7vw,132px)}
-.scene--finale .scene-inner{justify-items:center;text-align:center}.scene--finale .title{font-size:clamp(53px,8.6vw,135px)}
-.scene--finale .detail{max-width:920px}
-.scene--finale .ribbon{right:15%;top:13%;transform:scale(.75) rotate(18deg)}
-/* Headline alone first. Then it dissolves and the sentence is revealed character by character. */
-.js .scene .scene-title-wrap,.js .scene .scene-detail-wrap{opacity:0}
-.js .scene.is-playing .scene-title-wrap{opacity:1;animation:titleOut .62s ease var(--title-leave) both}
-.js .scene.is-playing .scene-title-wrap .glyph{animation:charIn .72s cubic-bezier(.2,.76,.18,1) var(--delay) both}
-.js .scene.is-playing .scene-detail-wrap{opacity:1}
-.js .scene.is-playing .scene-detail-wrap .glyph{animation:charIn .7s cubic-bezier(.2,.76,.2,1) var(--delay) both}
-.js .scene.is-playing .scene-detail-wrap .detail{visibility:visible}
-@keyframes charIn{from{opacity:0;filter:blur(11px);transform:translate3d(var(--dx,0px),var(--dy,33px),0) rotate(var(--rot,0deg)) scale(.9)}to{opacity:1;filter:blur(0);transform:translate3d(0,0,0) rotate(0deg) scale(1) skewX(var(--slant,0deg))}}
-@keyframes titleOut{0%,7%{opacity:1;filter:blur(0);transform:translate3d(0,0,0)}100%{opacity:0;filter:blur(13px);transform:translate3d(0,-27px,0)}}
-/* Keep the final contact area in native page flow, and make it part of the same transition. */
-.contact{position:relative;min-height:93svh;display:flex;align-items:center;justify-content:center;padding:120px clamp(26px,9vw,135px) 90px;background:radial-gradient(ellipse at 50% 3%,rgba(20,101,81,.12),transparent 65%),var(--bg)}
-.contact-inner{max-width:1100px;width:100%;opacity:0;transform:translateY(32px);transition:opacity .8s ease,transform .8s ease}
-.contact.is-visible .contact-inner{opacity:1;transform:none}
-.contact h2{font-weight:580;font-size:clamp(44px,7.6vw,105px);line-height:1.23;letter-spacing:-.07em;margin:0 0 clamp(50px,7vw,96px);max-width:860px}
-.contact h2 em{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:420;color:var(--mint);letter-spacing:-.06em}
-.contact-links{display:flex;gap:16px clamp(22px,3.6vw,46px);flex-wrap:wrap;align-items:center}
-.contact-links a,.contact-links button{color:var(--mint);border:0;border-bottom:1px solid rgba(183,249,213,.45);min-height:50px;background:none;padding:7px 0 10px;cursor:pointer;font-size:clamp(17px,2vw,23px)}
-.contact-links a:hover,.contact-links button:hover{border-color:#fff;color:#fff}
-.feedback{min-height:1.6em;font-size:14px;color:#a7c6b9;margin-top:24px}
-/* Escape hatch: an accessible full-content view for reduced motion and script failure. */
+:root{color-scheme:dark;--bg:#080b10;--ink:#eff5f2;--muted:#a1b4b7;--accent:#b2f8d0;--line:rgba(190,234,220,.14);--page-p:0;font-family:Inter,"PingFang SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);background:var(--bg);overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{font:inherit}a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+[hidden]{display:none!important}::selection{background:var(--accent);color:var(--bg)}
+.skip{position:fixed;top:-100px;left:10px;padding:12px 18px;color:#080b10;background:#fff;z-index:100}.skip:focus{top:10px}
+.progress{height:2px;position:fixed;inset:0 0 auto;z-index:60;background:rgba(255,255,255,.04)}
+.progress:after{content:"";display:block;background:var(--accent);height:100%;width:calc(var(--page-p)*100%);transition:width .07s linear}
+.nav{position:fixed;z-index:50;top:2px;left:0;right:0;display:flex;justify-content:flex-end;align-items:center;padding:0 clamp(21px,6vw,108px);height:66px;pointer-events:none;background:linear-gradient(to bottom,rgba(8,11,16,.94),rgba(8,11,16,0))}
+.nav-inner{pointer-events:auto;display:flex;align-items:center;gap:clamp(16px,3.2vw,43px)}
+.nav a,.lang{font-size:11px;letter-spacing:.13em;color:#c7d9d5;min-height:44px;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+.nav a:hover,.lang:hover{color:var(--accent)}
+.lang{background:none;border:1px solid rgba(178,248,208,.42);border-radius:60px;padding:0 14px;color:var(--accent);cursor:pointer}
+/* Each section remains part of native document scrolling; no snap, no slide switching. */
+.chapter{position:relative;height:158svh;min-height:1040px;isolation:isolate}
+.chapter-stage{height:100svh;min-height:520px;position:sticky;top:0;display:flex;align-items:center;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 72% 58%,rgba(37,118,97,.125),transparent 55%),var(--bg)}
+.chapter:nth-of-type(even) .chapter-stage{background:radial-gradient(ellipse at 22% 43%,rgba(38,99,124,.105),transparent 55%),var(--bg)}
+.chapter-stage:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.44;background-image:linear-gradient(90deg,rgba(160,220,205,.045) 1px,transparent 1px),linear-gradient(rgba(160,220,205,.045) 1px,transparent 1px);background-size:100px 100px;mask-image:radial-gradient(ellipse at 66% 50%,black,transparent 76%)}
+.orbit{position:absolute;width:min(60vw,760px);aspect-ratio:1;right:-16%;top:17%;border:1px solid rgba(172,250,206,.12);border-radius:50%;transform:translate3d(0,calc(var(--scene-p,0)*-40px),0) scale(calc(1 + var(--scene-p,0)*.09));opacity:.72;pointer-events:none}
+.orbit:after{content:"";position:absolute;inset:20%;border:1px solid rgba(172,250,206,.10);border-radius:50%;transform:rotateX(67deg)}
+.chapter:nth-of-type(even) .orbit{right:auto;left:-22%;opacity:.48}
+.stage-inner{width:min(1170px,calc(100% - clamp(52px,17vw,250px)));margin:0 auto;position:relative;min-height:min(72svh,720px);display:flex;align-items:center}
+.chapter[data-align="right"] .stage-inner{justify-content:flex-end}
+.copy{position:absolute;top:50%;left:0;transform:translateY(-50%);width:100%;max-width:1150px;visibility:hidden;pointer-events:none}
+.chapter[data-align="right"] .copy{left:auto;right:0;max-width:1000px;text-align:right}
+.copy-title{font-size:clamp(55px,9vw,143px);font-weight:640;letter-spacing:-.065em;line-height:1.27;margin:0;word-break:keep-all;overflow-wrap:break-word}
+.copy-title .tint{color:var(--accent)}
+.copy-title em{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.065em;font-style:italic;font-weight:450}
+.copy-detail{font-size:clamp(24px,3.7vw,55px);font-weight:420;line-height:1.65;letter-spacing:-.035em;max-width:870px;margin:0;color:#cbd8d7;word-break:keep-all;overflow-wrap:break-word}
+.chapter[data-align="right"] .copy-detail{margin-left:auto}
+.copy-detail strong{color:var(--accent);font-weight:560}
+.copy .glyph{display:inline-block;white-space:pre;will-change:opacity,transform,filter}.copy .word{display:inline-block;white-space:nowrap}.copy .tint{color:var(--accent)}
+.chapter-label{position:absolute;top:clamp(98px,14vh,145px);left:clamp(26px,9vw,135px);z-index:2;color:var(--accent);letter-spacing:.23em;font-size:11px;font-weight:600;opacity:.87}
+.chapter[data-align="right"] .chapter-label{left:auto;right:clamp(26px,9vw,135px)}
+.chapter-bottom{position:absolute;bottom:clamp(28px,6vh,62px);left:clamp(26px,9vw,135px);right:clamp(26px,9vw,135px);display:flex;align-items:center;justify-content:space-between;font-size:10px;letter-spacing:.14em;color:#839ba0;pointer-events:none;gap:12px}
+.chapter-bottom .down{color:var(--accent)}
+.chapter-links{display:flex;flex-wrap:wrap;align-items:center;gap:16px 36px;margin-top:40px;visibility:hidden;opacity:0;pointer-events:none}
+.chapter[data-align="right"] .chapter-links{justify-content:flex-end}
+.chapter-links a,.chapter-links button{display:inline-flex;align-items:center;min-height:45px;max-width:100%;border:0;border-bottom:1px solid rgba(178,248,208,.43);background:none;padding:4px 0 10px;color:var(--accent);font-size:clamp(14px,1.3vw,19px);letter-spacing:.01em;cursor:pointer}
+.chapter-links a:hover,.chapter-links button:hover{color:white;border-color:white}
+.chapter-links[data-active="1"]{visibility:visible;pointer-events:auto}
+.small-note{font-size:clamp(13px,1.45vw,16px);color:#96abad;line-height:1.7;margin:26px 0 0;max-width:600px}
+.chapter[data-align="right"] .small-note{margin-left:auto}
+.chapter .footer-link{font-size:14px}
+.ending{padding:110px clamp(26px,9vw,135px) 54px;text-align:center;background:linear-gradient(180deg,#080b10,#0e171a)}
+.ending-heading{font-size:clamp(32px,4.3vw,67px);font-weight:560;line-height:1.4;margin:0 0 32px;letter-spacing:-.045em}
+.ending-links{display:flex;gap:17px 38px;flex-wrap:wrap;align-items:center;justify-content:center;max-width:980px;margin:0 auto}
+.ending-links a,.ending-links button{font-size:16px;border:0;background:none;border-bottom:1px solid rgba(178,248,208,.5);color:var(--accent);min-height:45px;padding:3px 0 10px;cursor:pointer}
+.ending-links a:hover,.ending-links button:hover{color:white;border-color:white}
+.ending-note{min-height:1.8em;color:#9ab7af;font-size:13px;margin:24px 0 0;line-height:1.65}
+.ending-foot{margin:100px auto 0;border-top:1px solid var(--line);padding-top:26px;color:#849ba0;font-size:12px;display:flex;justify-content:space-between;gap:24px;max-width:1120px;text-align:left}
+.ending-foot a:hover{color:var(--accent)}
 @media(max-width:700px){
- .nav{height:66px;padding:0 20px}.nav-inner{gap:16px}.nav a,.lang{font-size:11px}
- .story{height:calc(100svh + 5 * 78svh);min-height:2100px}
- .story-stage{min-height:530px}
- .scene-inner{width:calc(100% - 52px);min-height:50svh}
- .title{font-size:clamp(54px,11.8vw,81px);line-height:1.26;letter-spacing:-.068em}
- .scene--hero .title{font-size:clamp(76px,17vw,115px)}
- .scene--work .title,.scene--goal .title,.scene--finale .title{font-size:clamp(51px,11.5vw,81px)}
- .detail,.scene--work .detail{font-size:clamp(23px,6vw,34px);line-height:1.57;letter-spacing:-.04em}
- .scene--offset .scene-inner,.scene--goal .scene-inner{justify-items:start;text-align:left}
- .scene--offset .detail,.scene--goal .detail{margin-left:0}
- .scene--contrast .scene-inner{text-align:left;justify-items:start}
- .scene--contrast .title{font-size:clamp(53px,11.8vw,81px)}
- .scene--finale .scene-inner{text-align:left;justify-items:start}
- .scene-actions{margin-top:32px;gap:12px 25px}
- .ribbon{width:112vw;right:-57%;top:32%}.ribbon--inner{width:75vw;right:-39%;top:36%}
- .contact{padding:100px 27px 65px;min-height:75svh}.contact h2{margin-bottom:48px}.contact-links{gap:12px 28px}
+ .chapter{height:158svh;min-height:900px}
+ .nav{height:60px;padding:0 18px}.nav-inner{gap:19px}.nav a{font-size:10px;letter-spacing:.07em}
+ .chapter-label{left:26px!important;right:auto!important;top:105px;font-size:10px;letter-spacing:.16em}
+ .stage-inner{width:calc(100% - 52px);min-height:65svh}.chapter[data-align="right"] .stage-inner{justify-content:flex-start}
+ .chapter[data-align="right"] .copy{right:auto;left:0;text-align:left}
+ .copy-title{font-size:clamp(47px,11.5vw,81px);line-height:1.36}
+ .copy-detail{font-size:clamp(22px,5.7vw,31px);line-height:1.65}
+ .chapter[data-align="right"] .copy-detail{margin-left:0}
+ .chapter[data-align="right"] .chapter-links{justify-content:flex-start}
+ .chapter-links{gap:12px 22px;margin-top:30px}
+ .chapter-bottom{left:26px;right:26px;bottom:29px}
+ .orbit{width:112vw;right:-56vw;top:31%;opacity:.5}.chapter:nth-of-type(even) .orbit{left:-72vw;opacity:.35}
+ .ending{padding:85px 26px 34px}.ending-foot{margin-top:75px}.ending-links{gap:10px 26px}
 }
-@media(max-width:350px){.title{font-size:48px!important}.scene--hero .title{font-size:72px!important}.detail{font-size:22px!important}.nav-inner{gap:11px}}
+@media(max-width:370px){.copy-title{font-size:clamp(44px,12vw,55px)}.copy-detail{font-size:22px}.nav-inner{gap:14px}}
 @media(prefers-reduced-motion:reduce){
- html{scroll-behavior:auto}.story{height:auto!important;min-height:0!important}.story-stage{position:relative;min-height:0;height:auto;overflow:visible;background:var(--bg)}
- .scene{position:relative;display:block;min-height:78svh;visibility:visible!important;opacity:1!important;transform:none!important;padding:110px 0 80px;pointer-events:auto!important}
- .scene-inner{display:block;min-height:0}.scene-title-wrap,.scene-detail-wrap{opacity:1!important;animation:none!important}
- .scene-title-wrap .glyph,.scene-detail-wrap .glyph{opacity:1!important;transform:none!important;filter:none!important;animation:none!important}
- .scene-detail-wrap{margin-top:25px}.detail{font-size:clamp(19px,3.5vw,35px)}.scene-actions{visibility:visible;opacity:1;transform:none;pointer-events:auto}
- .contact-inner{opacity:1;transform:none}.scene-ambient{display:none}
+ html{scroll-behavior:auto}.chapter{height:auto;min-height:0}.chapter-stage{position:relative;height:auto;min-height:0;display:block;padding:128px 0 112px}
+ .stage-inner{min-height:0;display:block}.chapter-label{top:60px}.copy{position:relative;top:auto;left:auto!important;right:auto!important;text-align:left!important;transform:none;visibility:visible!important;opacity:1!important;max-width:100%}
+ .copy-title{font-size:clamp(46px,8vw,95px)}.copy-detail{font-size:clamp(20px,3vw,35px);margin:28px 0 0!important}.copy .glyph{opacity:1!important;filter:none!important;transform:none!important}
+ .chapter-links{visibility:visible!important;opacity:1!important;pointer-events:auto!important;margin-top:25px}.chapter-bottom{display:none}.orbit{display:none}
+ .copy[data-phase="title"],.copy[data-phase="detail"]{display:block}.chapter-stage .copy[data-phase="detail"]{position:relative;margin-top:35px}
 }
-/* Default non-JS fallback: show all content as ordinary document. */
-html:not(.js) .story{height:auto;min-height:0}html:not(.js) .story-stage{position:relative;height:auto;min-height:0}
-html:not(.js) .scene{position:relative;opacity:1;visibility:visible;min-height:72svh;display:flex;pointer-events:auto}
-html:not(.js) .scene-inner{display:block}html:not(.js) .scene-detail-wrap{margin-top:26px}
-html:not(.js) .scene-actions{opacity:1;visibility:visible;transform:none;pointer-events:auto}
-html:not(.js) .contact-inner{opacity:1;transform:none}
+
+/* V6.1: retain independent full-screen chapters; one entrance triggers a complete short narrative. */
+.chapter-stage{opacity:calc(1 - var(--exit-p,0));}
+.chapter-bottom{display:none;}
+.ending-foot > span{display:none;}
+.ending-foot{justify-content:flex-end;margin-top:52px;}
+.chapter .chapter-label{opacity:.60;}
+.chapter .copy{opacity:0;}
+.chapter .copy .glyph{opacity:0;filter:blur(10px);transform:translate3d(0,20px,0);}
+.chapter.is-playing .copy{visibility:visible;}
+.chapter.is-playing .copy[data-phase="title"]{animation:v6TitleWindow 2.18s linear both;}
+.chapter.is-playing .copy[data-phase="detail"]{animation:v6DetailWindow .35s 2.00s ease-out both;}
+.chapter.is-playing .copy[data-phase="title"] .glyph{
+  animation:v6GlyphRise .48s cubic-bezier(.17,.8,.19,1) both;
+  animation-delay:calc(.13s + var(--i,0)*.046s);
+}
+.chapter.is-playing .copy[data-phase="detail"] .glyph{
+  animation:v6GlyphDetail .48s cubic-bezier(.23,.74,.17,1) both;
+  animation-delay:calc(2.11s + var(--i,0)*.029s);
+}
+.chapter.is-playing .chapter-links{
+  visibility:visible;pointer-events:auto;
+  animation:v6LinksIn .46s 3.12s both;
+}
+/* Editorial variety: subtle shifts in rhythm without changing the full-page layout. */
+#scene-2 .copy-title,#scene-5 .copy-title{font-style:italic;transform:skewX(-5deg);transform-origin:left center;}
+#scene-2.is-playing .copy-title .glyph,#scene-5.is-playing .copy-title .glyph{animation-name:v6GlyphSweep;}
+#scene-3.is-playing .copy-title .glyph,#scene-6.is-playing .copy-title .glyph{animation-name:v6GlyphCut;}
+#scene-4.is-playing .copy-title .glyph{animation-name:v6GlyphPulse;}
+@keyframes v6TitleWindow{
+  0%,68%{opacity:1;transform:translateY(-50%) translateX(0);}
+  100%{opacity:0;transform:translateY(calc(-50% - 18px)) translateX(0);}
+}
+@keyframes v6DetailWindow{0%{opacity:0;}100%{opacity:1;}}
+@keyframes v6GlyphRise{
+  0%{opacity:0;filter:blur(12px);transform:translate3d(0,30px,0);}
+  100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0);}
+}
+@keyframes v6GlyphSweep{
+  0%{opacity:0;filter:blur(9px);transform:translate3d(25px,0,0) skewX(9deg);}
+  100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0) skewX(0);}
+}
+@keyframes v6GlyphCut{
+  0%{opacity:0;filter:blur(2px);clip-path:inset(0 100% 0 0);transform:translate3d(0,0,0);}
+  100%{opacity:1;filter:blur(0);clip-path:inset(0 0 0 0);transform:translate3d(0,0,0);}
+}
+@keyframes v6GlyphPulse{
+  0%{opacity:0;filter:blur(14px);transform:translate3d(0,12px,0) scale(.96);}
+  100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0) scale(1);}
+}
+@keyframes v6GlyphDetail{
+  0%{opacity:0;filter:blur(7px);transform:translate3d(0,11px,0);}
+  100%{opacity:1;filter:blur(0);transform:translate3d(0,0,0);}
+}
+@keyframes v6LinksIn{0%{opacity:0;transform:translateY(10px);}100%{opacity:1;transform:translateY(0);}}
+@media(prefers-reduced-motion:reduce){
+  .chapter-stage{opacity:1!important;}
+  .chapter .copy{opacity:1!important;}
+  .chapter .copy .glyph{opacity:1!important;filter:none!important;transform:none!important;animation:none!important;}
+  .chapter.is-playing .copy,.chapter.is-playing .chapter-links{animation:none!important;}
+  #scene-2 .copy-title,#scene-5 .copy-title{transform:none;}
+}
+
 </style>
 </head>
 <body>
-<a class="skip" href="#story" data-i="skip">跳转到介绍</a>
+<a class="skip" href="#scene-1">跳转到正文</a>
 <div class="progress" aria-hidden="true"></div>
-<header class="nav"><nav class="nav-inner" aria-label="主要导航"><a href="#work" data-i="navWork">作品 / WORK</a><a href="#contact" data-i="navContact">联系 / CONTACT</a><button id="lang" type="button" class="lang" aria-label="Switch to English">EN</button></nav></header>
-<main>
-<section id="story" class="story" aria-label="个人介绍">
-<div class="story-stage" id="story-stage">
-<article class="scene scene--hero" data-step="0" data-key="s1" aria-label="我是北辰">
-    <div class="scene-ambient" aria-hidden="true"><span class="ribbon"></span><span class="ribbon ribbon--inner"></span></div>
-    <div class="scene-inner">
-      <div class="scene-title-wrap"><h1 class="title"><span class="title-text" data-text="title">我是北辰</span></h1></div>
-      <div class="scene-detail-wrap"><p class="detail" data-text="detail">01 年生，现在做跨境电商产品开发</p></div>
-    </div>
-  </article>
-<article class="scene scene--offset" data-step="1" data-key="s2" aria-label="白天做选品">
-    <div class="scene-ambient" aria-hidden="true"><span class="ribbon"></span><span class="ribbon ribbon--inner"></span></div>
-    <div class="scene-inner">
-      <div class="scene-title-wrap"><h2 class="title"><span class="title-text" data-text="title">白天做选品</span></h2></div>
-      <div class="scene-detail-wrap"><p class="detail" data-text="detail">下班后，我用 AI 尝试把想法做成产品</p></div>
-    </div>
-  </article>
-<article class="scene scene--contrast" data-step="2" data-key="s3" aria-label="亏过，也赚过">
-    <div class="scene-ambient" aria-hidden="true"><span class="ribbon"></span><span class="ribbon ribbon--inner"></span></div>
-    <div class="scene-inner">
-      <div class="scene-title-wrap"><h2 class="title"><span class="title-text" data-text="title">亏过，也赚过</span></h2></div>
-      <div class="scene-detail-wrap"><p class="detail" data-text="detail">试过拼多多、闲鱼副业，走过弯路，也做成过小生意</p></div>
-    </div>
-  </article>
-<article class="scene scene--work" data-step="3" data-key="s4" aria-label="先做出一个阅读器">
-    <div class="scene-ambient" aria-hidden="true"><span class="ribbon"></span><span class="ribbon ribbon--inner"></span></div>
-    <div class="scene-inner">
-      <div class="scene-title-wrap"><h2 class="title"><span class="title-text" data-text="title">先做出一个阅读器</span></h2></div>
-      <div class="scene-detail-wrap"><p class="detail" data-text="detail">《我的书房》已有网页版，也提供 Android 构建方式</p><div class="scene-actions"><a href="https://stroymind.github.io/My-reader/" target="_blank" rel="noopener noreferrer" data-i="tryReader">体验阅读器 ↗</a><a href="https://github.com/Stroymind/My-reader" target="_blank" rel="noopener noreferrer" data-i="sourceCode">查看源码 ↗</a></div></div>
-    </div>
-  </article>
-<article class="scene scene--goal" data-step="4" data-key="s5" aria-label="然后，靠产品赚钱">
-    <div class="scene-ambient" aria-hidden="true"><span class="ribbon"></span><span class="ribbon ribbon--inner"></span></div>
-    <div class="scene-inner">
-      <div class="scene-title-wrap"><h2 class="title"><span class="title-text" data-text="title">然后，靠产品赚钱</span></h2></div>
-      <div class="scene-detail-wrap"><p class="detail" data-text="detail">继续开发、发布、验证。做成什么样，我会把结果留下</p></div>
-    </div>
-  </article>
-<article class="scene scene--finale" data-step="5" data-key="s6" aria-label="想看看我能走多远">
-    <div class="scene-ambient" aria-hidden="true"><span class="ribbon"></span><span class="ribbon ribbon--inner"></span></div>
-    <div class="scene-inner">
-      <div class="scene-title-wrap"><h2 class="title"><span class="title-text" data-text="title">想看看我能走多远</span></h2></div>
-      <div class="scene-detail-wrap"><p class="detail" data-text="detail">关注北辰，看看一个普通人怎样把想法一步步做出来</p></div>
-    </div>
-  </article>
-</div>
-</section>
-<section class="contact" id="contact"><div class="contact-inner"><h2 data-i="contactTitle">故事还没结束<br><em>Stay tuned</em></h2><div class="contact-links"><a href="https://github.com/Stroymind" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="mailto:zhangbeichen520520@gmail.com">Email ↗</a><a href="https://wa.me/qr/SLCEHLG7SUOLF1" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a><button id="copy-douyin" type="button" data-i="douyin">抖音 · 复制账号</button><button id="copy-qq" type="button" data-i="qq">QQ · 复制账号</button></div><p class="feedback" id="feedback" aria-live="polite" role="status"></p></div></section>
+<header class="nav"><nav class="nav-inner" aria-label="主要导航"><a href="#scene-4" data-i="navWork">作品 / WORK</a><a href="#contact" data-i="navContact">联系 / CONTACT</a><button id="lang" class="lang" type="button" aria-label="Switch to English">EN</button></nav></header>
+<main id="main">
+<!-- All chapters are part of one continuous scroll; there are no slides or page snaps. -->
+<section class="chapter" id="scene-1" data-align="left"><div class="chapter-stage"><div class="orbit" aria-hidden="true"></div><span class="chapter-label" data-i="s1Label">01 / ABOUT ME · 关于我</span><div class="stage-inner"><div class="copy" data-phase="title"><h1 class="copy-title"><span data-i="s1Title" data-split>我是<span class="tint">北辰</span></span></h1></div><div class="copy" data-phase="detail"><p class="copy-detail" data-i="s1Detail" data-split>2001 年出生，目前从事跨境电商产品开发</p></div></div><div class="chapter-bottom"><span>BEICHEN / BUILDING IN PUBLIC</span><span data-i="scrollHint">继续向下滚动 ↓</span></div></div></section>
+<section class="chapter" id="scene-2" data-align="right"><div class="chapter-stage"><div class="orbit" aria-hidden="true"></div><span class="chapter-label" data-i="s2Label">02 / EXPLORING · 正在探索</span><div class="stage-inner"><div class="copy" data-phase="title"><h2 class="copy-title"><span data-i="s2Title" data-split>白天做<span class="tint">选品</span></span></h2></div><div class="copy" data-phase="detail"><p class="copy-detail" data-i="s2Detail" data-split>工作之外，我在用 AI 尝试开发自己的产品</p></div></div><div class="chapter-bottom"><span>AI / BUSINESS / INDIE DEVELOPMENT</span><span>↓</span></div></div></section>
+<section class="chapter" id="scene-3" data-align="left"><div class="chapter-stage"><div class="orbit" aria-hidden="true"></div><span class="chapter-label" data-i="s3Label">03 / EXPERIMENTS · 尝试过的事</span><div class="stage-inner"><div class="copy" data-phase="title"><h2 class="copy-title"><span data-i="s3Title" data-split>我也<span class="tint">走过弯路</span></span></h2></div><div class="copy" data-phase="detail"><p class="copy-detail" data-i="s3Detail" data-split>做过拼多多、闲鱼副业。亏过钱，也有过小额盈利</p></div></div><div class="chapter-bottom"><span>SMALL BETS / REAL FEEDBACK</span><span>↓</span></div></div></section>
+<section class="chapter" id="scene-4" data-align="right"><div class="chapter-stage"><div class="orbit" aria-hidden="true"></div><span class="chapter-label" data-i="s4Label">04 / SELECTED WORK · 代表作品</span><div class="stage-inner"><div class="copy" data-phase="title"><h2 class="copy-title"><span data-i="s4Title" data-split>先做出一个<span class="tint">产品</span></span></h2></div><div class="copy" data-phase="detail"><p class="copy-detail" data-i="s4Detail" data-split>《我的书房》已经有可用的网页版，正在探索知识管理方向</p><div class="chapter-links" data-actions><a href="https://stroymind.github.io/My-reader/" target="_blank" rel="noopener noreferrer" data-i="readerLink">体验阅读器 ↗</a><a href="https://github.com/Stroymind/My-reader" target="_blank" rel="noopener noreferrer" data-i="sourceLink">查看源码 ↗</a></div></div></div><div class="chapter-bottom"><span>MY READER / WEB + ANDROID CODE</span><span>↓</span></div></div></section>
+<section class="chapter" id="scene-5" data-align="left"><div class="chapter-stage"><div class="orbit" aria-hidden="true"></div><span class="chapter-label" data-i="s5Label">05 / THE NEXT BET · 下一步</span><div class="stage-inner"><div class="copy" data-phase="title"><h2 class="copy-title"><span data-i="s5Title" data-split>让产品<span class="tint">赚到钱</span></span></h2></div><div class="copy" data-phase="detail"><p class="copy-detail" data-i="s5Detail" data-split>从选品、开发到发布和验证，我想把真实结果记录下来</p></div></div><div class="chapter-bottom"><span>NO PROMISES / SHOW THE WORK</span><span>↓</span></div></div></section>
+<section class="chapter" id="scene-6" data-align="right"><div class="chapter-stage"><div class="orbit" aria-hidden="true"></div><span class="chapter-label" data-i="s6Label">06 / FOLLOW THE JOURNEY · 关注后续</span><div class="stage-inner"><div class="copy" data-phase="title"><h2 class="copy-title"><span data-i="s6Title" data-split>想看看<span class="tint">结果</span>吗</span></h2></div><div class="copy" data-phase="detail"><p class="copy-detail" data-i="s6Detail" data-split>关注我，看看一个普通人能把自己的想法做到哪一步</p><div class="chapter-links" data-actions><a href="https://github.com/Stroymind" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="mailto:zhangbeichen520520@gmail.com">Email ↗</a><a href="#contact" data-i="allContacts">更多联系渠道 ↓</a></div></div></div><div class="chapter-bottom"><span>THE STORY IS STILL BEING WRITTEN</span><span>↓</span></div></div></section>
+<section class="ending" id="contact"><h2 class="ending-heading" data-i="contactHeading">继续关注这个实验</h2><div class="ending-links"><a href="https://github.com/Stroymind" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="mailto:zhangbeichen520520@gmail.com">Email ↗</a><a href="https://wa.me/qr/SLCEHLG7SUOLF1" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a><button id="copy-douyin" type="button" data-i="douyinCopy">抖音 · 复制账号</button><button id="copy-qq" type="button" data-i="qqCopy">QQ · 复制账号</button></div><p class="ending-note" id="copy-feedback" role="status" aria-live="polite"></p><div class="ending-foot"><span>BEICHEN © 2026</span><a href="#scene-1" data-i="backTop">回到开头 ↑</a></div></section>
 </main>
 <script>
 (()=>{
-'use strict';
-document.documentElement.classList.add('js');
-const scenes=[...document.querySelectorAll('.scene')];
-const story=document.querySelector('.story');
-const contact=document.querySelector('.contact');
-const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-const textMap={
- zh:{
-  s1:{title:'我是北辰',detail:'01 年生，现在做跨境电商产品开发'},
-  s2:{title:'白天做选品',detail:'下班后，我用 AI 尝试把想法做成产品'},
-  s3:{title:'亏过，也赚过',detail:'试过拼多多、闲鱼副业，走过弯路，也做成过小生意'},
-  s4:{title:'先做出一个阅读器',detail:'《我的书房》已有网页版，也提供 Android 构建方式'},
-  s5:{title:'然后，靠产品赚钱',detail:'继续开发、发布、验证。做成什么样，我会把结果留下'},
-  s6:{title:'想看看我能走多远',detail:'关注北辰，看看一个普通人怎样把想法一步步做出来'},
-  skip:'跳转到介绍',navWork:'作品 / WORK',navContact:'联系 / CONTACT',tryReader:'体验阅读器 ↗',sourceCode:'查看源码 ↗',contactTitle:'故事还没结束<br><em>Stay tuned</em>',douyin:'抖音 · 复制账号',qq:'QQ · 复制账号',douyinCopied:'抖音号已复制：Unko52520',douyinFallback:'抖音号：Unko52520',qqCopied:'QQ 号已复制',qqFallback:'QQ：3203070078'
- },
- en:{
-  s1:{title:"I'm Beichen",detail:'Born in 2001. I work in cross-border e-commerce product development.'},
-  s2:{title:'Products by day',detail:'After hours, I use AI to try turning ideas into products.'},
-  s3:{title:'Lost some. Earned some.',detail:'I tried small e-commerce side projects. Some lost money; others made a little.'},
-  s4:{title:'I built a reader',detail:'My Reader runs on the web, with a build path for Android.'},
-  s5:{title:'Next: make it earn',detail:'Keep building, launching, testing—and share what actually happens.'},
-  s6:{title:'How far can I go?',detail:'Follow along as an ordinary person tries to turn ideas into something real.'},
-  skip:'Skip to introduction',navWork:'WORK',navContact:'CONTACT',tryReader:'Try My Reader ↗',sourceCode:'Source on GitHub ↗',contactTitle:'The story continues<br><em>Stay tuned</em>',douyin:'Douyin · Copy ID',qq:'QQ · Copy ID',douyinCopied:'Douyin ID copied: Unko52520',douyinFallback:'Douyin: Unko52520',qqCopied:'QQ ID copied',qqFallback:'QQ: 3203070078'
+ 'use strict';
+ const scenes=[...document.querySelectorAll('.chapter')];
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ const i18n={
+ zh:{navWork:'作品 / WORK',navContact:'联系 / CONTACT',s1Label:'01 / ABOUT ME · 关于我',s1Title:'我是北辰',s1Detail:'2001 年出生，目前从事跨境电商产品开发',s2Label:'02 / EXPLORING · 正在探索',s2Title:'白天做选品',s2Detail:'工作之外，我在用 AI 尝试开发自己的产品',s3Label:'03 / EXPERIMENTS · 尝试过的事',s3Title:'我也走过弯路',s3Detail:'做过拼多多、闲鱼副业。亏过钱，也有过小额盈利',s4Label:'04 / SELECTED WORK · 代表作品',s4Title:'先做出一个产品',s4Detail:'《我的书房》已经有可用的网页版，正在探索知识管理方向',s5Label:'05 / THE NEXT BET · 下一步',s5Title:'让产品赚到钱',s5Detail:'从选品、开发到发布和验证，我想把真实结果记录下来',s6Label:'06 / FOLLOW THE JOURNEY · 关注后续',s6Title:'想看看结果吗',s6Detail:'关注我，看看一个普通人能把自己的想法做到哪一步',scrollHint:'继续向下滚动 ↓',readerLink:'体验阅读器 ↗',sourceLink:'查看源码 ↗',allContacts:'更多联系渠道 ↓',contactHeading:'继续关注这个实验',douyinCopy:'抖音 · 复制账号',qqCopy:'QQ · 复制账号',backTop:'回到开头 ↑',douyinOK:'抖音号已复制：Unko52520',douyinFallback:'抖音号：Unko52520',qqOK:'QQ 号已复制',qqFallback:'QQ：3203070078'},
+ en:{navWork:'WORK',navContact:'CONTACT',s1Label:'01 / ABOUT ME',s1Title:'I’m Beichen',s1Detail:'Born in 2001. I work in cross-border e-commerce product development.',s2Label:'02 / EXPLORING',s2Title:'Products by day',s2Detail:'Outside work, I’m learning to build my own products with AI.',s3Label:'03 / EXPERIMENTS',s3Title:'I’ve tried and failed',s3Detail:'I tried e-commerce side projects. Some lost money; some made a little.',s4Label:'04 / SELECTED WORK',s4Title:'I built a reader',s4Detail:'My Reader is usable on the web. I’m exploring where it could go next.',s5Label:'05 / THE NEXT BET',s5Title:'Make products earn',s5Detail:'From sourcing and building to launching and testing, I want to share what really happens.',s6Label:'06 / FOLLOW THE JOURNEY',s6Title:'Curious how it goes?',s6Detail:'Follow along to see how far an ordinary person can take an idea.',scrollHint:'KEEP SCROLLING ↓',readerLink:'Try My Reader ↗',sourceLink:'View source ↗',allContacts:'More ways to connect ↓',contactHeading:'Follow the experiment',douyinCopy:'Douyin · Copy ID',qqCopy:'QQ · Copy ID',backTop:'BACK TO TOP ↑',douyinOK:'Douyin ID copied: Unko52520',douyinFallback:'Douyin: Unko52520',qqOK:'QQ ID copied',qqFallback:'QQ: 3203070078'}
+ };
+ let lang='zh';let frame=0;
+ const clamp=n=>Math.max(0,Math.min(1,n));
+ const ease=(a,b,p)=>{const x=clamp((p-a)/(b-a));return x*x*(3-2*x)};
+ function split(el,text){
+   el.textContent='';el.setAttribute('aria-label',text);const frag=document.createDocumentFragment();
+   const glyphs=(window.Intl?.Segmenter?[...new Intl.Segmenter(lang==='zh'?'zh':'en',{granularity:'grapheme'}).segment(text)].map(x=>x.segment):Array.from(text));
+   const accent={zh:{s1Title:'北辰',s2Title:'选品',s3Title:'弯路',s4Title:'产品',s5Title:'赚到钱',s6Title:'结果'},en:{s1Title:'Beichen',s2Title:'day',s3Title:'failed',s4Title:'reader',s5Title:'earn',s6Title:'goes'}};
+   const highlight=accent[lang][el.getAttribute('data-i')]||'';const start=text.indexOf(highlight);
+   let parent=frag;let inWord=false;
+   glyphs.forEach((ch,index)=>{if(lang==='en'&&ch===' '){parent=frag;inWord=false;frag.append(' ');return}if(lang==='en'&&!inWord){parent=document.createElement('span');parent.className='word';frag.appendChild(parent);inWord=true}
+     const sp=document.createElement('span');sp.className='glyph';sp.textContent=ch;sp.setAttribute('aria-hidden','true');sp.style.setProperty('--i',index);if(highlight&&index>=start&&index<start+Array.from(highlight).length)sp.classList.add('tint');parent.appendChild(sp)});
+   el.append(frag);
  }
-};
-const emphasis={zh:{s1:'北辰',s2:'选品',s3:'赚过',s4:'阅读器',s5:'赚钱',s6:'多远'},en:{s1:'Beichen',s2:'day',s3:'Earned',s4:'reader',s5:'earn',s6:'far'}};
-let lang='zh';let tick=0;let current=-1;let cachedUnit=0;
-const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
-const smooth=(a,b,x)=>{let n=clamp((x-a)/(b-a));return n*n*(3-2*n)};
-function chars(text){
- const seg=window.Intl?.Segmenter;
- return seg?[...new Intl.Segmenter(lang==='zh'?'zh':'en',{granularity:'grapheme'}).segment(text)].map(x=>x.segment):Array.from(text);
-}
-function buildLetters(el,text,key,role,index){
- el.textContent='';el.setAttribute('aria-label',text);
- const glyphs=chars(text),focus=emphasis[lang][key]||'';
- const emStart=text.indexOf(focus);const emEnd=emStart<0?-1:emStart+focus.length;
- const fragment=document.createDocumentFragment();let word=null;let offset=0;
- glyphs.forEach((ch,n)=>{
-   if(lang==='en'&&ch===' '){fragment.append(' ');word=null;offset+=ch.length;return;}
-   if(lang==='en'&&!word){word=document.createElement('span');word.className='word';fragment.appendChild(word)}
-   const span=document.createElement('span');span.className='glyph';span.textContent=ch;span.setAttribute('aria-hidden','true');
-   const hot=emStart>=0&&offset>=emStart&&offset<emEnd;
-   if(hot){span.classList.add('emphasis');span.style.setProperty('--slant','-12deg')}
-   const nChars=glyphs.filter(g=>g.trim()).length;
-   const delayCap=role==='title'?850:1050;
-   const ms=Math.round((n/Math.max(1,glyphs.length-1))*delayCap);
-   span.style.setProperty('--delay',`${(role==='detail'?2630:0)+ms}ms`);
-   const varset=[
-     {x:0,y:60,rot:-5},
-     {x:index%2?31:-31,y:38,rot:index%2?11:-10},
-     {x:0,y:n%2?43:-24,rot:n%2?-6:6},
-     {x:(n%3-1)*30,y:32,rot:(n%2?8:-8)},
-     {x:-24,y:64,rot:-8},
-     {x:25,y:-42,rot:9}
-   ][index];
-   span.style.setProperty('--dx',`${role==='detail'?varset.x*.5:varset.x}px`);
-   span.style.setProperty('--dy',`${role==='detail'?Math.abs(varset.y)*.5:varset.y}px`);
-   span.style.setProperty('--rot',`${role==='detail'?varset.rot*.38:varset.rot}deg`);
-   (word||fragment).appendChild(span);offset+=ch.length;
- });
- el.append(fragment);
-}
-function renderLanguage(code){
- lang=code==='en'?'en':'zh';let trans=textMap[lang];document.documentElement.lang=lang==='en'?'en':'zh-CN';
- document.title=lang==='en'?'Beichen | Ideas into things':'北辰｜从想法，到作品';
- document.querySelectorAll('[data-i]').forEach(node=>{let key=node.dataset.i;if(trans[key]===undefined)return;if(key==='contactTitle')node.innerHTML=trans[key];else node.textContent=trans[key]});
- scenes.forEach((scene,i)=>{let k=scene.dataset.key;let values=trans[k];buildLetters(scene.querySelector('[data-text="title"]'),values.title,k,'title',i);buildLetters(scene.querySelector('[data-text="detail"]'),values.detail,k,'detail',i);scene.classList.remove('is-playing','is-actionable');scene.dataset.started='0';scene.setAttribute('aria-label',values.title);scene.style.setProperty('--title-leave','2110ms');});
- document.querySelector('#lang').textContent=lang==='en'?'中文':'EN';document.querySelector('#lang').setAttribute('aria-label',lang==='en'?'切换为中文':'Switch to English');
- document.querySelector('#feedback').textContent='';current=-1;update(true);
-}
-function playScene(i){
- const scene=scenes[i];if(!scene||scene.dataset.started==='1'||reduced.matches)return;
- scene.dataset.started='1';scene.classList.add('is-playing');
- // The complete sequence starts once on entrance; no additional scroll or tapping is required.
- const runId=Symbol();scene._run=runId;
- setTimeout(()=>{if(scene._run===runId&&scene.classList.contains('is-playing'))scene.classList.add('is-actionable')},3550);
-}
-function update(force=false){
- tick=0;const height=innerHeight;
- const range=Math.max(1,story.offsetHeight-height);
- const s=clamp((scrollY-story.offsetTop)/range,0,1)*(scenes.length-1);
- document.documentElement.style.setProperty('--progress',(scrollY/Math.max(1,document.documentElement.scrollHeight-height)).toFixed(5));
- if(reduced.matches){scenes.forEach(c=>{c.style.opacity='1';c.style.visibility='visible';c.style.transform='none';c.classList.add('is-actionable')});contact.classList.add('is-visible');return;}
- let nearest=Math.round(s);nearest=clamp(nearest,0,scenes.length-1);
- const visibleStory=(scrollY<story.offsetTop+story.offsetHeight&&scrollY+height>story.offsetTop);
- scenes.forEach((scene,i)=>{
-   const delta=i-s,dist=Math.abs(delta);
-   const op=visibleStory?1-smooth(.18,.91,dist):0;
-   const visible=op>.008;
-   scene.classList.toggle('is-visible',visible);
-   scene.style.opacity=op.toFixed(3);
-   scene.style.transform=`translate3d(${(-delta*15).toFixed(1)}px,${(delta*58).toFixed(1)}px,0) scale(${(1-Math.min(dist,1)*.055).toFixed(3)})`;
-   scene.style.filter=`blur(${(Math.min(dist,1)*2.5).toFixed(2)}px)`;
-   scene.style.zIndex=String(10-Math.round(dist*5));
-   if(!visible&&scene.dataset.started==='1'&&dist>1.15){scene.dataset.started='0';scene.classList.remove('is-playing','is-actionable');scene._run=null;}
-   scene.style.pointerEvents=dist<.4&&scene.classList.contains('is-actionable')?'auto':'none';
- });
- const active=scenes[nearest];if(visibleStory&&Math.abs(nearest-s)<.55&&active){if(current!==nearest||force){current=nearest;playScene(nearest)}else playScene(nearest)}
- const c=contact.getBoundingClientRect();contact.classList.toggle('is-visible',c.top<height*.88&&c.bottom>0);
-}
-function schedule(){if(!tick)tick=requestAnimationFrame(update)}
-async function copy(kind){
- const val=kind==='douyin'?'Unko52520':'3203070078';const el=document.querySelector('#feedback');
- try{if(!navigator.clipboard?.writeText)throw new Error('clipboard missing');await navigator.clipboard.writeText(val);el.textContent=textMap[lang][kind+'Copied']}catch{el.textContent=textMap[lang][kind+'Fallback']}
-}
-document.querySelector('#lang').addEventListener('click',()=>{renderLanguage(lang==='en'?'zh':'en');try{localStorage.setItem('beichen-language',lang)}catch{}});
-document.querySelector('#copy-douyin').addEventListener('click',()=>copy('douyin'));
-document.querySelector('#copy-qq').addEventListener('click',()=>copy('qq'));
-// The work jump targets the fourth narrative beat, not a separate page.
-document.querySelector('.nav a[href="#work"]').addEventListener('click',event=>{event.preventDefault();const y=story.offsetTop+(story.offsetHeight-innerHeight)*3/(scenes.length-1);scrollTo({top:y,behavior:reduced.matches?'instant':'smooth'});try{history.replaceState(null,'','#work')}catch{}});
-addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});reduced.addEventListener?.('change',()=>{renderLanguage(lang);schedule()});
-let initial=/^zh/i.test(navigator.language||'')?'zh':'en';try{let v=localStorage.getItem('beichen-language');if(v==='zh'||v==='en')initial=v}catch{}
-renderLanguage(initial);if(location.hash==='#work')requestAnimationFrame(()=>scrollTo({top:story.offsetTop+(story.offsetHeight-innerHeight)*3/(scenes.length-1),behavior:'instant'}));requestAnimationFrame(update);
+ function setLang(code){
+   lang=code==='en'?'en':'zh';const v=i18n[lang];document.documentElement.lang=lang==='en'?'en':'zh-CN';document.title=lang==='en'?'Beichen — From ideas to things':'北辰 — 从想法，到作品';
+   document.querySelectorAll('[data-i]').forEach(el=>{const value=v[el.dataset.i];if(value===undefined)return; if(el.hasAttribute('data-split')){split(el,value)}else{el.textContent=value}});
+   document.querySelector('#lang').textContent=lang==='en'?'中文':'EN';document.querySelector('#lang').setAttribute('aria-label',lang==='en'?'切换为中文':'Switch to English');
+   document.querySelector('#copy-feedback').textContent='';schedule();
+ }
+ // A single arrival triggers the entire title -> detail sequence; scroll only moves between chapters.
+ function update(){
+   frame=0;
+   const height=innerHeight;
+   const pageMax=Math.max(1,document.documentElement.scrollHeight-height);
+   document.documentElement.style.setProperty('--page-p',(scrollY/pageMax).toFixed(5));
+   for(const scene of scenes){
+     const rect=scene.getBoundingClientRect();
+     const range=Math.max(1,rect.height-height);
+     const p=clamp(-rect.top/range);
+     scene.style.setProperty('--scene-p',p.toFixed(4));
+     // At the boundary, the old chapter gently gives way as the new full-screen chapter arrives.
+     const exit=clamp((height*.48-rect.bottom)/(height*.48));
+     scene.style.setProperty('--exit-p',reduced.matches?'0':exit.toFixed(3));
+     if(reduced.matches){
+       scene.classList.remove('is-playing');
+       scene.querySelectorAll('.copy').forEach(el=>{el.style.visibility='visible';el.style.opacity='1'});
+       scene.querySelectorAll('[data-actions]').forEach(el=>{el.dataset.active='1';el.removeAttribute('inert')});
+       continue;
+     }
+     const isArriving=rect.top<=height*.45 && rect.bottom>height*.28;
+     if(isArriving && !scene.classList.contains('is-playing')){
+       // A new chapter begins automatically. No repeated taps or tiny scroll steps.
+       scene.classList.add('is-playing');
+       scene.querySelectorAll('.copy').forEach(el=>{el.style.visibility='';el.style.opacity=''});
+       scene.querySelectorAll('[data-actions]').forEach(el=>{el.removeAttribute('inert')});
+     }
+     // Reset only well after the chapter has left; scrolling backward replays the sequence.
+     if(rect.bottom < -height*.18 || rect.top > height*1.2){
+       scene.classList.remove('is-playing');
+       scene.querySelectorAll('[data-actions]').forEach(el=>{el.setAttribute('inert','')});
+     }
+   }
+ }
+ function schedule(){if(!frame)frame=requestAnimationFrame(update)}
+ async function copy(kind){const val=kind==='douyin'?'Unko52520':'3203070078';const feedback=document.querySelector('#copy-feedback');try{if(!navigator.clipboard?.writeText)throw Error('Clipboard unavailable');await navigator.clipboard.writeText(val);feedback.textContent=i18n[lang][kind+'OK']}catch{feedback.textContent=i18n[lang][kind+'Fallback']}}
+ document.querySelector('#lang').addEventListener('click',()=>{setLang(lang==='zh'?'en':'zh');try{localStorage.setItem('beichen-language',lang)}catch{}});
+ document.querySelector('#copy-douyin').addEventListener('click',()=>copy('douyin'));
+ document.querySelector('#copy-qq').addEventListener('click',()=>copy('qq'));
+ addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});reduced.addEventListener?.('change',schedule);
+ let initial=/^zh/i.test(navigator.language||'')?'zh':'en';try{const saved=localStorage.getItem('beichen-language');if(['zh','en'].includes(saved))initial=saved}catch{}
+ setLang(initial);requestAnimationFrame(update);
 })();
 </script>
 </body>
